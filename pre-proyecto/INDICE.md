@@ -40,17 +40,19 @@ Documentación de implantación, despliegue y decisiones técnicas de infraestru
 
 | Número | Nombre del archivo | Ruta relativa | Finalidad | Dependencias | Resumen breve | Estado |
 |--------|-------------------|---------------|-----------|--------------|---------------|--------|
-| 0 | `00-decisiones-generales-implantacion.md` | `pre-proyecto/implantacion/00-decisiones-generales-implantacion.md` | Documentar decisiones técnicas generales de implantación | `02-Comparativa-Frameworks-PHP.md`, `wa-server-info-2026-04-28-101933.json` | Decisiones confirmadas: despliegue por FTP, no Composer en servidor, desarrollo en Codespace, directorios WA/WP, separación WP/WA, Slim como framework base, repositorio como base clonable. | ✅ Completado |
-| 1 | `00-INDICE-Implantacion.md` | `pre-proyecto/implantacion/00-INDICE-Implantacion.md` | Índice general de documentación de implantación | — | Índice de todos los documentos de implantación con orden de lectura, dependencias y estado. | ✅ Completado |
-| 2 | `10-Decisiones-Etapa01-Slim-FTP.md` | `pre-proyecto/implantacion/10-Decisiones-Etapa01-Slim-FTP.md` | Decisiones específicas de Etapa 1 | `00-decisiones-generales-implantacion.md` | Decisiones: Slim en raíz del repositorio, despliegue directo sin wa-slim/, rutas configurables. | ⏳ Pendiente de aprobación |
-| 3 | `20-Alcance-Etapa01-Slim-FTP.md` | `pre-proyecto/implantacion/20-Alcance-Etapa01-Slim-FTP.md` | Alcance incluido/excluido de Etapa 1 | `10-Decisiones-Etapa01-Slim-FTP.md` | Alcance: Slim integrado, despliegue FTP, prueba "Hola mundo". Excluido: autenticación, logging, ORM, etc. | ⏳ Pendiente de aprobación |
-| 4 | `30-Plan-Etapa01-Slim-FTP.md` | `pre-proyecto/implantacion/30-Plan-Etapa01-Slim-FTP.md` | Plan detallado de trabajo para Etapa 1 | `10-Decisiones-Etapa01-Slim-FTP.md`, `20-Alcance-Etapa01-Slim-FTP.md` | Plan: objetivos, requisitos, estructura, actividades, criterios de aceptación, riesgos. | ⏳ Pendiente de aprobación |
-| 5 | `40-Despliegue-Etapa01-Slim-FTP.md` | `pre-proyecto/implantacion/40-Despliegue-Etapa01-Slim-FTP.md` | Procedimiento de despliegue FTP | `30-Plan-Etapa01-Slim-FTP.md` | Despliegue: agente @ftp-deployer, script deploy.sh, consideraciones de seguridad. | ⏳ Pendiente de aprobación |
-| 6 | `50-Verificacion-Etapa01-Slim-FTP.md` | `pre-proyecto/implantacion/50-Verificacion-Etapa01-Slim-FTP.md` | Procedimiento de verificación post-despliegue | `40-Despliegue-Etapa01-Slim-FTP.md` | Verificación: HTTP tests, archivos, logs, criterios de éxito, diagnóstico. | ⏳ Pendiente de aprobación |
-| 7 | `60-Pendientes-Etapa01-Slim-FTP.md` | `pre-proyecto/implantacion/60-Pendientes-Etapa01-Slim-FTP.md` | Seguimiento de pendientes y acciones | `30-Plan-Etapa01-Slim-FTP.md` | Pendientes: acciones del equipo, del desarrollador, incidencias, decisiones. | ⏳ Pendiente de aprobación |
-| 8 | `Etapa01_Slim-Despliegue-FTP.md` | `pre-proyecto/implantacion/Etapa01_Slim-Despliegue-FTP.md` | **Documento de transición** (sustituido) | — | Documento original descompuesto en 10-60. Mantenido solo para trazabilidad histórica. | ⚠️ Sustituido |
-| 9 | `wa-server-info-2026-04-28-101933.json` | `pre-proyecto/implantacion/wa-server-info-2026-04-28-101933.json` | Información técnica del servidor WA (PHP, extensiones, configuración) | — | Dump de phpinfo() del servidor WA: PHP 8.3.30, LiteSpeed, extensiones disponibles. | ℹ️ Informativo |
-| 10 | `wp-Información de salud del sitio.txt` | `pre-proyecto/implantacion/wp-Información de salud del sitio.txt` | Información de salud del sitio WordPress | — | Site Health de WordPress: WP 6.9.4, WooCommerce 10.4.4, rutas de directorios. | ℹ️ Informativo |
+| 0 | `00-INDICE-Implantacion.md` | `pre-proyecto/implantacion/00-INDICE-Implantacion.md` | Índice + **todas las decisiones confirmadas** de implantación (consolidado) | `wa-server-info.json` | Versión 2.0 consolidada. Sustituye a `00-decisiones-generales.md` y `10-Decisiones.md`. Incluye: decisiones (FTP, Composer, Codespace, directorios, Slim en raíz, sin wa-slim/, .env, .htaccess, URL definitiva, agente-only, estructura completa), datos servidor, dependencias Etapa 2. | ⏳ Pendiente de aprobación |
+| 1 | `10-Plan-Etapa01-Slim-FTP.md` | `pre-proyecto/implantacion/10-Plan-Etapa01-Slim-FTP.md` | Plan detallado de Etapa 1 (consolidado) | `00-INDICE-Implantacion.md` | Versión 2.0 consolidada. Sustituye a `20-Alcance.md` y `30-Plan.md`. Incluye: objetivo, alcance incluido/excluido, requisitos, estructura, actividades, criterios de aceptación, riesgos, evaluación agente/skill. | ⏳ Pendiente de aprobación |
+| 2 | `20-Operaciones-Etapa01-Slim-FTP.md` | `pre-proyecto/implantacion/20-Operaciones-Etapa01-Slim-FTP.md` | Operaciones de Etapa 1 (consolidado) | `10-Plan-Etapa01-Slim-FTP.md` | Versión 2.0 consolidada. Sustituye a `40-Despliegue.md`, `50-Verificacion.md` y `60-Pendientes.md`. Incluye: despliegue (solo agente), verificación, diagnóstico, seguridad, pendientes y seguimiento Etapa 2. | ⏳ Pendiente de aprobación |
+| 3 | `00-decisiones-generales-implantacion.md` | `pre-proyecto/implantacion/00-decisiones-generales-implantacion.md` | **Transición**: contenido consolidado en `00-INDICE-Implantacion.md` | — | Documento original v1.0. Sustituido por `00-INDICE-Implantacion.md` v2.0. Mantenido para trazabilidad histórica. | ⚠️ Sustituido |
+| 4 | `10-Decisiones-Etapa01-Slim-FTP.md` | `pre-proyecto/implantacion/10-Decisiones-Etapa01-Slim-FTP.md` | **Transición**: contenido consolidado en `00-INDICE-Implantacion.md` | — | Documento original v1.0. Sustituido por `00-INDICE-Implantacion.md` v2.0. | ⚠️ Sustituido |
+| 5 | `20-Alcance-Etapa01-Slim-FTP.md` | `pre-proyecto/implantacion/20-Alcance-Etapa01-Slim-FTP.md` | **Transición**: contenido consolidado en `10-Plan-Etapa01-Slim-FTP.md` | — | Documento original v1.0. Sustituido por `10-Plan.md` v2.0. | ⚠️ Sustituido |
+| 6 | `30-Plan-Etapa01-Slim-FTP.md` | `pre-proyecto/implantacion/30-Plan-Etapa01-Slim-FTP.md` | **Transición**: contenido consolidado en `10-Plan-Etapa01-Slim-FTP.md` | — | Documento original v1.0. Sustituido por `10-Plan.md` v2.0. | ⚠️ Sustituido |
+| 7 | `40-Despliegue-Etapa01-Slim-FTP.md` | `pre-proyecto/implantacion/40-Despliegue-Etapa01-Slim-FTP.md` | **Transición**: contenido consolidado en `20-Operaciones-Etapa01-Slim-FTP.md` | — | Documento original v1.0. Sustituido por `20-Operaciones.md` v2.0. | ⚠️ Sustituido |
+| 8 | `50-Verificacion-Etapa01-Slim-FTP.md` | `pre-proyecto/implantacion/50-Verificacion-Etapa01-Slim-FTP.md` | **Transición**: contenido consolidado en `20-Operaciones-Etapa01-Slim-FTP.md` | — | Documento original v1.0. Sustituido por `20-Operaciones.md` v2.0. | ⚠️ Sustituido |
+| 9 | `60-Pendientes-Etapa01-Slim-FTP.md` | `pre-proyecto/implantacion/60-Pendientes-Etapa01-Slim-FTP.md` | **Transición**: contenido consolidado en `20-Operaciones-Etapa01-Slim-FTP.md` | — | Documento original v1.0. Sustituido por `20-Operaciones.md` v2.0. | ⚠️ Sustituido |
+| 10 | `Etapa01_Slim-Despliegue-FTP.md` | `pre-proyecto/implantacion/Etapa01_Slim-Despliegue-FTP.md` | **Transición**: documento original descompuesto | — | Descompuesto en serie 10-60 (ahora consolidado en 3 docs). | ⚠️ Sustituido |
+| 11 | `wa-server-info-2026-04-28-101933.json` | `pre-proyecto/implantacion/wa-server-info-2026-04-28-101933.json` | Información técnica del servidor WA | — | Dump de phpinfo(): PHP 8.3.30, LiteSpeed, extensiones disponibles. | ℹ️ Informativo |
+| 12 | `wp-Información de salud del sitio.txt` | `pre-proyecto/implantacion/wp-Información de salud del sitio.txt` | Información de salud del sitio WordPress | — | Site Health: WP 6.9.4, WooCommerce 10.4.4, rutas de directorios. | ℹ️ Informativo |
 
 ---
 
@@ -92,26 +94,20 @@ pre-proyecto/
 ├── 03-Boceto_B09-ACLARATIVO.md ◄──────────────────┼──────┘
 │                                                   │
 ├── implantacion/                                   │
-│   ├── 00-decisiones-generales-implantacion.md ◄───┼─────── Estudios/02-Comparativa-Frameworks-PHP.md
-│   │        │                                      │
-│   │        ├── 00-INDICE-Implantacion.md          │
-│   │        │                                      │
-│   │        ├── 10-Decisiones-Etapa01-Slim-FTP.md ◄┘
-│   │        │
-│   │        ├── 20-Alcance-Etapa01-Slim-FTP.md
-│   │        │
-│   │        ├── 30-Plan-Etapa01-Slim-FTP.md
-│   │        │
-│   │        ├── 40-Despliegue-Etapa01-Slim-FTP.md
-│   │        │
-│   │        ├── 50-Verificacion-Etapa01-Slim-FTP.md
-│   │        │
-│   │        ├── 60-Pendientes-Etapa01-Slim-FTP.md
-│   │        │
-│   │        └── Etapa01_Slim-Despliegue-FTP.md (sustituido, trazabilidad)
-│   │
-│   ├── wa-server-info-2026-04-28-101933.json
-│   └── wp-Información de salud del sitio.txt
+│   ├── 00-INDICE-Implantacion.md ◄─────────────────┼─────── (decisiones consolidadas)
+│   │                                               │
+│   ├── 10-Plan-Etapa01-Slim-FTP.md ◄───────────────┘
+│   │                                               │
+│   ├── 20-Operaciones-Etapa01-Slim-FTP.md          │
+│   │                                               │
+│   ├── 00-decisiones-generales-implantacion.md     │ (sustituido)
+│   ├── 10-Decisiones-Etapa01-Slim-FTP.md           │ (sustituido)
+│   ├── 20-Alcance-Etapa01-Slim-FTP.md              │ (sustituido)
+│   ├── 30-Plan-Etapa01-Slim-FTP.md                 │ (sustituido)
+│   ├── 40-Despliegue-Etapa01-Slim-FTP.md           │ (sustituido)
+│   ├── 50-Verificacion-Etapa01-Slim-FTP.md         │ (sustituido)
+│   ├── 60-Pendientes-Etapa01-Slim-FTP.md           │ (sustituido)
+│   └── Etapa01_Slim-Despliegue-FTP.md              │ (sustituido)
 │
 ├── codespace/                                      │
 │   └── guia-inicio-rapido-opencode.md ◄────────────│── pendiente
@@ -167,14 +163,10 @@ pre-proyecto/
 | 13 | `pre-proyecto/Estudios/07-Implementacion-Logging-Trazabilidad.md` | Implementación: sistema de logging, trazabilidad y errores |
 | 14 | `pre-proyecto/Estudios/08-Analisis-Tecnico-Decisiones-Framework.md` | **Análisis complementario**: resolución de 5 cuestiones técnicas sobre la decisión de framework |
 | 15 | `pre-proyecto/implantacion/00-decisiones-generales-implantacion.md` | **Implantación**: decisiones técnicas confirmadas (FTP, Composer, Codespace, directorios) |
-| 16 | `pre-proyecto/implantacion/00-INDICE-Implantacion.md` | **Implantación**: índice de documentación de implantación |
-| 17 | `pre-proyecto/implantacion/10-Decisiones-Etapa01-Slim-FTP.md` | **Implantación**: decisiones específicas de Etapa 1 (Slim en raíz, sin wa-slim/) |
-| 18 | `pre-proyecto/implantacion/20-Alcance-Etapa01-Slim-FTP.md` | **Implantación**: alcance incluido/excluido de Etapa 1 |
-| 19 | `pre-proyecto/implantacion/30-Plan-Etapa01-Slim-FTP.md` | **Implantación**: plan detallado de Etapa 1 |
-| 20 | `pre-proyecto/implantacion/40-Despliegue-Etapa01-Slim-FTP.md` | **Implantación**: procedimiento de despliegue FTP |
-| 21 | `pre-proyecto/implantacion/50-Verificacion-Etapa01-Slim-FTP.md` | **Implantación**: procedimiento de verificación |
-| 22 | `pre-proyecto/implantacion/60-Pendientes-Etapa01-Slim-FTP.md` | **Implantación**: seguimiento de pendientes |
-| 23 | `pre-proyecto/codespace/guia-inicio-rapido-opencode.md` | **Nuevo desarrollador**: guía de OpenCode para el entorno de desarrollo |
+| 16 | `pre-proyecto/implantacion/00-INDICE-Implantacion.md` | **Implantación**: índice + todas las decisiones confirmadas |
+| 17 | `pre-proyecto/implantacion/10-Plan-Etapa01-Slim-FTP.md` | **Implantación**: plan consolidado de Etapa 1 |
+| 18 | `pre-proyecto/implantacion/20-Operaciones-Etapa01-Slim-FTP.md` | **Implantación**: operaciones consolidadas de Etapa 1 |
+| 19 | `pre-proyecto/codespace/guia-inicio-rapido-opencode.md` | **Nuevo desarrollador**: guía de OpenCode para el entorno de desarrollo |
 | — | `pre-proyecto/legado-obsoleto/01-Boceto_B08.md` | **Referencia histórica**: entendimiento inicial (v0.8), obsoleto |
 
                                         ---
@@ -195,5 +187,5 @@ pre-proyecto/
                                         ---
 
                                         *Última actualización: 28 de abril de 2026*  
-*Sección de implantación: 00-decisiones-generales-implantacion.md, 00-INDICE-Implantacion.md, 10-Decisiones-Etapa01-Slim-FTP.md, 20-Alcance-Etapa01-Slim-FTP.md, 30-Plan-Etapa01-Slim-FTP.md, 40-Despliegue-Etapa01-Slim-FTP.md, 50-Verificacion-Etapa01-Slim-FTP.md, 60-Pendientes-Etapa01-Slim-FTP.md*
+*Sección de implantación consolidada: 00-INDICE-Implantacion.md, 10-Plan-Etapa01-Slim-FTP.md, 20-Operaciones-Etapa01-Slim-FTP.md (más 8 docs históricos como transición)*
                                         

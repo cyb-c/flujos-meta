@@ -37,6 +37,7 @@ Las reglas aquí contenidas son de cumplimiento obligatorio. Su propósito es ga
 
 ## Regla de Consulta Obligatoria de Inventario
 
+**REQUIREMENT_ID:** GOV-PRE  
 **Prioridad:** Crítica
 
 **Todo agente o colaborador debe consultar `inventario_recursos.md` antes de iniciar cualquier acción relevante que afecte recursos, configuración, variables de entorno, endpoints, contratos entre servicios o infraestructura del proyecto.**
@@ -47,10 +48,13 @@ Esta consulta previa es obligatoria para obtener una foto instantánea del estad
 - Inconsistencias entre lo implementado y lo documentado
 - Duplicación de recursos o configuraciones
 
+**Consecuencia:** El incumplimiento de esta regla será detectado en la siguiente auditoría de `@governance-auditor` y reportado como discrepancia.
+
 ---
 
 ## R1 — No asumir valores no documentados y convención de nombres
 
+**REQUIREMENT_ID:** GOV-R1  
 **Prioridad:** Crítica
 
 Si existe duda sobre nombres de recursos, endpoints, contratos entre servicios, variables de entorno o cualquier valor no documentado, **se debe detener la acción, registrar el bloqueo fuera del inventario y solicitar confirmación antes de generar código**.
@@ -73,6 +77,7 @@ Si existe duda sobre nombres de recursos, endpoints, contratos entre servicios, 
 
 ## R2 — Cero hardcoding y validación de variables de entorno
 
+**REQUIREMENT_ID:** GOV-R2  
 **Prioridad:** Crítica
 
 Queda prohibido codificar literales de credenciales, connection strings, URLs de servicios, IDs de base de datos, claves API o cualquier valor que pueda variar entre entornos. Toda configuración debe provenir de fuentes externas verificadas y toda variable obligatoria debe validarse antes de usarse.
@@ -93,13 +98,14 @@ Queda prohibido codificar literales de credenciales, connection strings, URLs de
 
 ## R3 — Gestión de secrets y credenciales
 
+**REQUIREMENT_ID:** GOV-R3  
 **Prioridad:** Crítica
 
 Todas las claves, tokens, conexiones a bases de datos y certificados deben guardarse en almacenamiento seguro y **nunca ser versionados en el repositorio**.
 
 **Obligaciones:**
 1. En desarrollo local: usar archivos de entorno local, siempre listados en `.gitignore`.
-2. En despliegue: usar secrets gestionados por la plataforma de despliegue.
+2. En despliegue: usar secrets gestionados por la plataforma de despliegue. El agente `@ftp-deployer` leerá las credenciales de variables de entorno, nunca de archivos.
 3. Connection strings de base de datos: inyectar exclusivamente mediante variables de entorno.
 4. Para acceso a servicios externos: guardar tokens en variables de entorno, nunca en el código.
 5. Usar archivos de plantilla de entorno (ej. `.env.example`) para documentar qué variables son requeridas, sin incluir valores reales.
@@ -109,6 +115,7 @@ Todas las claves, tokens, conexiones a bases de datos y certificados deben guard
 
 ## R5 — Idioma y estilo
 
+**REQUIREMENT_ID:** GOV-R5  
 **Prioridad:** Alta
 
 | Elemento | Idioma |
@@ -126,6 +133,7 @@ Todas las claves, tokens, conexiones a bases de datos y certificados deben guard
 
 ## R8 — Configuración de despliegue
 
+**REQUIREMENT_ID:** GOV-R8  
 **Prioridad:** Crítica
 
 El despliegue debe ser reproducible y seguro, sin exponer credenciales en archivos versionados.
@@ -138,13 +146,14 @@ El despliegue debe ser reproducible y seguro, sin exponer credenciales en archiv
 5. Si se usa contenedor, mapear correctamente las variables de build y runtime.
 6. Ejecutar el comando de build o compilación del proyecto como verificación pre-despliegue.
 7. Los scripts de despliegue no deben contener credenciales literales.
-8. **El único mecanismo válido de despliegue es el agente de despliegue del repositorio.**
-9. **Queda prohibido desplegar mediante CI/CD, FTP manual, scripts alternativos, comandos manuales u otros agentes.**
+8. **El único mecanismo válido de despliegue es el agente `@ftp-deployer` (definido en `.opencode/agents/ftp-deployer.md`).**
+9. **Queda prohibido desplegar mediante CI/CD, FTP manual, scripts alternativos, comandos manuales u cualquier otro agente OpenCode distinto de `@ftp-deployer`.**
 
 ---
 
 ## R10 — Estrategia de pruebas
 
+**REQUIREMENT_ID:** GOV-R10  
 **Prioridad:** Alta
 
 El proyecto debe contar con un framework de test apropiado que ejecute el código en el entorno real o emulado.
@@ -158,6 +167,7 @@ El proyecto debe contar con un framework de test apropiado que ejecute el códig
 
 ## R11 — Calidad de código antes de commit
 
+**REQUIREMENT_ID:** GOV-R11  
 **Prioridad:** Alta
 
 Ejecutar linters y análisis estático; el proyecto debe compilarse sin errores.
@@ -170,6 +180,7 @@ Ejecutar linters y análisis estático; el proyecto debe compilarse sin errores.
 
 ## R12 — Convenciones de commit
 
+**REQUIREMENT_ID:** GOV-R12  
 **Prioridad:** Media
 
 Cada commit debe tener:
@@ -182,6 +193,7 @@ Cada commit debe tener:
 
 ## R13 — Contratos entre servicios
 
+**REQUIREMENT_ID:** GOV-R13  
 **Prioridad:** Media
 
 Documentar las rutas, métodos y formatos de request/response de cada endpoint consumido entre servicios.
@@ -194,6 +206,7 @@ Documentar las rutas, métodos y formatos de request/response de cada endpoint c
 
 ## R14 — Variables de entorno del frontend e inventario actualizado
 
+**REQUIREMENT_ID:** GOV-R14  
 **Prioridad:** Alta
 
 **El documento `inventario_recursos.md` debe mantenerse actualizado en todo momento y registrar únicamente variables reales y verificadas expuestas al frontend, así como recursos, agentes, endpoints, scripts y documentos existentes.**
@@ -204,10 +217,11 @@ Documentar las rutas, métodos y formatos de request/response de cada endpoint c
 3. Registrar en `inventario_recursos.md` con flag de sensibilidad.
 4. El inventario debe registrar solo variables reales y verificadas.
 5. El inventario debe registrar recursos, agentes, endpoints, scripts y documentos existentes.
-6. Ninguna persona o agente debe modificar el inventario directamente sin seguir el procedimiento establecido.
-7. Los cambios en el inventario deben solicitarse a través del flujo de gobernanza del proyecto.
-8. La consistencia del inventario debe verificarse mediante auditorías periódicas.
-9. Después de pruebas y antes de commit, si hay cambios en recursos, se debe actualizar el inventario.
+6. **Ninguna persona o agente distinto de `@governance-updater` puede modificar `.gobernanza/inventario_recursos.md` directamente.**
+7. Los cambios en el inventario deben solicitarse a `@governance-updater`.
+8. La consistencia del inventario debe verificarse mediante auditorías periódicas ejecutadas por `@governance-auditor`.
+9. Después de pruebas y antes de commit, si hay cambios en recursos, `@governance-updater` debe actualizar `_registro_/inventario_recursos_bitaacora.md` antes de continuar.
+10. El incumplimiento de esta regla será detectado en la siguiente auditoría de `@governance-auditor` y reportado como discrepancia.
 
 ---
 
@@ -248,59 +262,7 @@ Para nuevos colaboradores o agentes:
 2. **Segundo:** Leer la documentación de roles específica para entender criterios operativos
 3. **Tercero:** Consultar `inventario_recursos.md` para valores específicos cuando sea necesario
 4. **Cuarto:** Consultar `documentacion_tecnica_preventiva.md` antes de acciones que requieran conocimiento técnico verificable
-
----
-
-## Política de Versionamiento de Documentos
-
-### Reglas de Versionamiento
-
-1. **Versiones independientes:**
-   - Cada documento de gobernanza tiene su propio número de versión
-   - Los cambios en un documento NO requieren actualizar la versión de otros
-   - La versión se incrementa cuando hay cambios significativos en el contenido
-
-2. **Incremento de versión:**
-   - **Versión mayor (X.0):** Cambios estructurales importantes, adición de nuevas secciones, reorganización significativa
-   - **Versión menor (0.X):** Cambios moderados, adición de nuevas reglas, modificaciones existentes
-   - **Versiones de parche:** Correcciones menores, typos, formato (opcional)
-
-3. **Historial de cambios:**
-   - `inventario_recursos_bitaacora.md`: Registro centralizado de cambios del inventario
-   - `reglas_universales.md`: Los cambios se documentan en commits del repositorio
-   - Documentación de roles: Los cambios se documentan en commits del repositorio
-
-4. **Sincronización entre documentos:**
-   - Los documentos pueden tener versiones diferentes
-   - No es necesario mantener sincronización de versiones entre documentos
-   - Para cambios que afectan múltiples documentos, actualizar cada uno independientemente
-
-5. **Notificación de cambios:**
-   - Los cambios significativos en `reglas_universales.md` deben comunicarse a todos los involucrados
-   - Los cambios en `inventario_recursos.md` deben comunicarse a los responsables de gestión y auditoría
-   - Los cambios en documentación de roles deben comunicarse a los roles afectados
-
-### Proceso de Actualización
-
-1. **Identificar necesidad de cambio:**
-   - Revisión periódica de consistencia
-   - Detección de problemas o ambigüedades
-   - Solicitud de mejoras por parte de colaboradores
-
-2. **Evaluar impacto:**
-   - Determinar qué documentos se ven afectados
-   - Evaluar si el cambio es mayor o menor
-   - Identificar quiénes deben ser notificados
-
-3. **Implementar cambio:**
-   - Actualizar el documento correspondiente
-   - Incrementar la versión según el tipo de cambio
-   - Documentar el cambio en `inventario_recursos_bitaacora.md` (si aplica)
-
-4. **Notificar a interesados:**
-   - Comunicar el cambio a los afectados
-   - Actualizar referencias cruzadas si es necesario
-   - Solicitar confirmación de comprensión
+5. **Quinto:** Consultar `politica_versionamiento.md` para cambios en documentación
 
 ---
 
@@ -310,9 +272,10 @@ Para nuevos colaboradores o agentes:
 |-----------|-----------|
 | `reglas_universales.md` | Define todas las reglas universales del proyecto (este documento) |
 | `inventario_recursos.md` | Fuente de verdad para recursos, variables de entorno, endpoints y configuración |
-| `inventario_recursos_bitaacora.md` | Registro de cambios del inventario |
+| `inventario_recursos_bitaacora.md` | Registro de cambios del inventario (`_registro_/`) |
 | `documentacion_tecnica_preventiva.md` | Conocimiento técnico validado para prevenir errores comunes y fallos conocidos. Consultar antes de planificar, diseñar, desarrollar, corregir, depurar, probar o desplegar. |
-| Documentación de roles | Define responsabilidades y flujos de trabajo de cada rol o agente |
+| `politica_versionamiento.md` | Política de versionamiento de documentos de gobernanza |
+| Agentes OpenCode | Define responsabilidades y flujos de trabajo de cada agente (`@ftp-deployer`, `@governance-updater`, `@governance-auditor`) |
 
 ---
 

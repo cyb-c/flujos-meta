@@ -1,0 +1,34 @@
+# Bitácora de cambios del inventario (gobernanza)
+_registro_/
+
+# Archivos de entorno local
+.env
+.env.local
+.env.development
+.env.production
+.env.example
+
+# Node modules
+node_modules/
+
+# Build outputs
+dist/
+build/
+.next/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db

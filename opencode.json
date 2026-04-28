@@ -1,0 +1,56 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": [
+    ".gobernanza/reglas_universales.md",
+    ".gobernanza/inventario_recursos.md"
+  ],
+  "agent": {
+    "ftp-deployer": {
+      "description": "Despliega archivos por FTP con verificación posterior",
+      "mode": "subagent",
+      "temperature": 0.1,
+      "permission": {
+        "bash": "allow",
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "edit": "deny",
+        "webfetch": "deny",
+        "task": "deny",
+        "skill": "ask"
+      }
+    },
+    "governance-updater": {
+      "description": "Actualiza el inventario de recursos del proyecto. Unico agente autorizado para modificar .gobernanza/inventario_recursos.md",
+      "mode": "subagent",
+      "temperature": 0.1,
+      "permission": {
+        "read": "allow",
+        "edit": "allow",
+        "write": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "bash": "allow",
+        "skill": "allow",
+        "task": "deny",
+        "webfetch": "deny"
+      }
+    },
+    "governance-auditor": {
+      "description": "Audita la consistencia entre inventario y recursos reales. Solo lectura, no modifica archivos.",
+      "mode": "subagent",
+      "temperature": 0.1,
+      "permission": {
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "bash": "allow",
+        "edit": "deny",
+        "write": "deny",
+        "skill": "allow",
+        "task": "deny",
+        "webfetch": "deny"
+      }
+    }
+  }
+}
