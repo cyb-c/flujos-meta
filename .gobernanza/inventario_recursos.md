@@ -1,7 +1,7 @@
 # Inventario de Recursos y Configuración
 
 > **Finalidad:** Fuente única de verdad para recursos del proyecto.
-> **Versión:** 1.1
+> **Versión:** 1.2
 > **Importante:** Este documento debe mantenerse actualizado. Consultar antes de iniciar cualquier acción relevante.
 > **Restricción:** Solo puede contener información real, existente y verificada.
 
@@ -21,7 +21,8 @@
 10. [Contratos entre Servicios](#8-contratos-entre-servicios)
 11. [Stack Tecnológico](#9-stack-tecnológico)
 12. [Archivos de Configuración](#10-archivos-de-configuración)
-13. [Notas de Mantenimiento](#notas-de-mantenimiento)
+13. [Agentes del Proyecto](#11-agentes-del-proyecto)
+14. [Notas de Mantenimiento](#notas-de-mantenimiento)
 
 ---
 
@@ -53,16 +54,16 @@
 
 | Campo | Valor |
 |-------|-------|
-| **Nombre del proyecto** | |
-| **Finalidad** | |
-| **Repositorio** | |
-| **Entorno de trabajo** | |
-| **Lenguaje base** | |
-| **Stack tecnológico** | |
-| **Entornos de despliegue** | |
-| **Plataformas de deployment** | |
-| **Gestión de Secrets** | |
-| **Estructura del proyecto** | |
+| **Nombre del proyecto** | Web-App de Automatización WooCommerce |
+| **Finalidad** | Automatización de flujos de WooCommerce mediante Web-App independiente con Slim PHP |
+| **Repositorio** | flujos-meta (GitHub Codespace) |
+| **Entorno de trabajo** | GitHub Codespace (Linux, PHP 8.1+, Composer 2.0+, Git 2.0+, lftp) |
+| **Lenguaje base** | PHP 8.1+ (servidor: 8.3.30) |
+| **Stack tecnológico** | Slim 4.x, MariaDB 11.4.10, WooCommerce 10.4.4, LiteSpeed, WordPress 6.9.4 |
+| **Entornos de despliegue** | Staging: stg2.cofemlevante.es |
+| **Plataformas de deployment** | Hosting compartido con LiteSpeed, acceso FTP/FTPS |
+| **Gestión de Secrets** | Variables de entorno del sistema (CONTRASENYA_FTP_WA) + .env (no versionado) |
+| **Estructura del proyecto** | Código en raíz (Slim como framework base), pre-proyecto/ solo documentación |
 
 ---
 
@@ -70,7 +71,7 @@
 
 | Secret | Ubicación | Uso | Estado |
 |--------|-----------|-----|--------|
-| | | | 🔲 |
+| CONTRASENYA_FTP_WA | Variable de entorno del sistema (Codespace) | Contraseña FTP para usuario ftp-wa@levantecofem.es | ✅ |
 
 > **Nota:** Los valores de secrets nunca se documentan en este archivo. Solo se registran los nombres.
 
@@ -82,15 +83,22 @@
 
 | Variable | Uso | Sensible | Ejemplo | Estado |
 |----------|-----|----------|---------|--------|
-| | | | | 🔲 |
+| FTP_SERVER | Servidor FTP para despliegue | No | ftp.bee-viva.es | ✅ |
+| FTP_USER | Usuario FTP | No | ftp-wa@levantecofem.es | ✅ |
+| FTP_PASSWORD | Contraseña FTP (vía CONTRASENYA_FTP_WA) | Sí | — | ✅ |
+| FTP_TARGET_PATH | Directorio remoto de despliegue | No | /home/beevivac/stg2.cofemlevante.es/ | ✅ |
+| FTP_PORT | Puerto FTP | No | 21 | ✅ |
+| APP_ENV | Entorno de aplicación | No | development | ✅ |
+| APP_DEBUG | Modo debug | No | true | ✅ |
 
 ### 3.2. Frontend
 
 | Variable | Uso | Sensible | Ejemplo | Estado |
 |----------|-----|----------|---------|--------|
-| | | | | 🔲 |
+| | | | | 🚫 |
 
-> **Nota:** Usar archivos de plantilla de entorno (ej. `.env.example`) como plantillas versionadas sin valores reales. Los archivos de entorno local deben estar en `.gitignore`.
+> **Nota:** Frontend no aplica en Etapa 1. No hay variables de frontend expuestas.
+> Usar archivos de plantilla de entorno (ej. `.env.example`) como plantillas versionadas sin valores reales. Los archivos de entorno local deben estar en `.gitignore`.
 
 ---
 
@@ -100,21 +108,26 @@
 
 | Recurso | Proveedor | Ambiente | Connection String | Estado |
 |---------|-----------|----------|-------------------|--------|
-| | | | | 🔲 |
+| WordPress DB | MariaDB 11.4.10 | Servidor (compartido) | No disponible (WP gestiona su BD) | ✅ |
 
 **Esquema de Base de Datos:**
-- Modelos:
-- Migraciones:
-- Seed:
+- Modelos: No hay base de datos propia en Etapa 1
+- Migraciones: No aplica en Etapa 1
+- Seed: No aplica en Etapa 1
+- **Nota:** WordPress usa MariaDB 11.4.10 en el servidor. Extensiones disponibles: mysqli, pdo_mysql.
 
 ### 4.2. Plataforma de Despliegue
 
 | Recurso | Valor | Estado |
 |---------|-------|--------|
-| **Proyecto** | | 🔲 |
-| **Plan** | | 🔲 |
-| **Dominio** | | 🔲 |
-| **Environment Variables** | | 🔲 |
+| **Proyecto** | Web-App WooCommerce | ✅ |
+| **Plan** | Hosting compartido | ✅ |
+| **Dominio** | stg2.cofemlevante.es | ✅ |
+| **Servidor web** | LiteSpeed | ✅ |
+| **Directorios remotos** | | |
+| Directorio WA | /home/beevivac/stg2.cofemlevante.es/ | ✅ |
+| Directorio WP | /home/beevivac/levantecofem_es | ✅ |
+| Ruta logs WA | /home/beevivac/logs/stg2.cofemlevante.es/error.log | ✅ |
 
 ---
 
@@ -122,17 +135,23 @@
 
 | Campo | Valor |
 |-------|-------|
-| **Método primario** | |
-| **Archivo de configuración** | |
-| **Autenticación** | |
-| **Comando de build** | |
-| **Comando de start** | |
+| **Método primario** | FTP/FTPS explícito mediante agente @ftp-deployer |
+| **Archivo de configuración** | .opencode/agents/ftp-deployer.md |
+| **Autenticación** | Variables de entorno (CONTRASENYA_FTP_WA) |
+| **Comando de build** | composer install --no-dev --optimize-autoloader |
+| **Comando de start** | php -S localhost:8080 -t public (desarrollo) |
 
 ### 5.1. Variables de Entorno en Plataforma de Despliegue
 
 | Variable | Tipo | Sensible | Ubicación | Estado |
 |----------|------|----------|-----------|--------|
-| | | | | 🔲 |
+| FTP_SERVER | string | No | .env + entorno | ✅ |
+| FTP_USER | string | No | .env + entorno | ✅ |
+| FTP_PASSWORD | string | Sí | Variable entorno (CONTRASENYA_FTP_WA) | ✅ |
+| FTP_TARGET_PATH | string | No | .env | ✅ |
+| FTP_PORT | int | No | .env (default 21) | ✅ |
+| APP_ENV | string | No | .env | ✅ |
+| APP_DEBUG | bool | No | .env | ✅ |
 
 ---
 
@@ -142,13 +161,21 @@
 
 | Variable | Tipo | Sensible | Descripción | Estado |
 |----------|------|----------|-------------|--------|
-| | | | | 🔲 |
+| FTP_SERVER | string | No | Servidor FTP para despliegue | ✅ |
+| FTP_USER | string | No | Usuario FTP | ✅ |
+| FTP_PASSWORD | string | Sí | Contraseña FTP (vía CONTRASENYA_FTP_WA) | ✅ |
+| FTP_TARGET_PATH | string | No | Directorio remoto de despliegue | ✅ |
+| FTP_PORT | int | No | Puerto FTP (21) | ✅ |
+| APP_ENV | string | No | Entorno de aplicación (development/production) | ✅ |
+| APP_DEBUG | bool | No | Modo debug (true en desarrollo) | ✅ |
 
 ### Frontend
 
 | Variable | Tipo | Sensible | Descripción | Estado |
 |----------|------|----------|-------------|--------|
-| | | | | 🔲 |
+| | | | | 🚫 |
+
+> **Nota:** Frontend no aplica en Etapa 1. No hay variables de frontend expuestas.
 
 ---
 
@@ -156,7 +183,8 @@
 
 | Servicio | Propósito | Variables Requeridas | Estado |
 |----------|-----------|---------------------|--------|
-| | | | 🔲 |
+| WordPress (previsto Etapa 2+) | Endpoint REST personalizado | Por definir | 🚫 |
+| WooCommerce (previsto Etapa 2+) | API de productos/pedidos | Por definir | 🚫 |
 
 ---
 
@@ -172,7 +200,15 @@
 
 | Capa | Tecnología | Versión | Estado |
 |------|------------|---------|--------|
-| | | | 🔲 |
+| Servidor web | LiteSpeed | (servidor) | ✅ |
+| PHP | PHP | 8.3.30 | ✅ |
+| Framework | Slim | 4.x (^4.15) | 🔲 |
+| PSR-7 | slim/psr7 | ^1.7 | 🔲 |
+| Dotenv | vlucas/phpdotenv | ^5.6 | 🔲 |
+| Base de datos | MariaDB | 11.4.10 | ✅ |
+| CMS | WordPress | 6.9.4 | ✅ |
+| E-commerce | WooCommerce | 10.4.4 | ✅ |
+| Cliente FTP | lftp | (cualquiera) | ✅ |
 
 ---
 
@@ -180,11 +216,24 @@
 
 | Archivo | Finalidad | Estado |
 |---------|-----------|--------|
-| Gestor de paquetes | Dependencias y scripts | 🔲 |
-| Configuración del lenguaje | Configuración del lenguaje | 🔲 |
-| Configuración de despliegue | Configuración de despliegue | 🔲 |
-| Plantilla de variables | Plantilla de variables | 🔲 |
-| `.gitignore` | Exclusiones de versionado | 🔲 |
+| composer.json | Dependencias y scripts | 🔲 |
+| .env | Variables de entorno (NO versionado) | 🔲 |
+| .env.example | Plantilla de variables (versionado) | ✅ |
+| .htaccess (raíz) | Redirección raíz → public/ | 🔲 |
+| public/.htaccess | Reescritura Slim | 🔲 |
+| .gitignore | Exclusiones de versionado | ✅ |
+| .opencode/agents/ftp-deployer.md | Configuración del agente desplegador | ✅ |
+| opencode.json | Configuración OpenCode + agentes | ✅ |
+
+---
+
+## 11. Agentes del Proyecto
+
+| Agente | Archivo | Propósito | Estado |
+|--------|---------|-----------|--------|
+| @ftp-deployer | .opencode/agents/ftp-deployer.md | Despliegue FTP con verificación | ✅ |
+| @governance-updater | .opencode/agents/governance-updater.md | Actualización del inventario | ✅ |
+| @governance-auditor | .opencode/agents/governance-auditor.md | Auditoría de consistencia | ✅ |
 
 ---
 

@@ -27,19 +27,22 @@ desde el Codespace/workspace al servidor de hosting compartido mediante FTP.
 
 ## Flujo de trabajo
 
-1. PRE-VALIDACIÓN: Verifica que el directorio fuente existe y tiene contenido.
+1. PRE-VALIDACIÓN: Verifica que el directorio fuente (raíz del repositorio) existe y tiene contenido.
 2. VERIFICAR CLIENTE: Comprueba si lftp está instalado; si no, instálalo.
 3. PREPARAR PAQUETE: Ejecuta composer install --no-dev --optimize-autoloader si
    existe composer.json.
-4. CONECTAR FTP: Usa las credenciales de variables de entorno para conectar.
-5. TRANSFERIR: Sube los archivos usando lftp mirror --reverse.
+4. CONECTAR FTP: Exporta LFTP_PASSWORD desde CONTRASENYA_FTP_WA. Conecta a
+   ftp.bee-viva.es:21 con FTPS explícito (set ftp:ssl-force on;
+   set ftp:ssl-protect-data on).
+5. TRANSFERIR: Sube los archivos usando lftp mirror --reverse --delete
+   desde ./ hasta FTP_TARGET_PATH.
 6. VERIFICAR: Comprueba que los archivos se transfirieron correctamente.
 7. INFORMAR: Resume el resultado con archivos transferidos, errores, y siguiente paso.
 
 ## Rutas predefinidas
 
-- Origen: pre-proyecto/wa-slim/
-- Destino FTP: /home/beevivac/stg2.cofemlevante.es/wa-slim/
+- Origen: raíz del repositorio (./)
+- Destino FTP: /home/beevivac/stg2.cofemlevante.es/
 - Servidor FTP: ftp.bee-viva.es
 - Puerto: 21
 - Usuario: ftp-wa@levantecofem.es

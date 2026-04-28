@@ -1,42 +1,39 @@
 # Índice y Decisiones de Implantación
 
-**Versión:** 2.0  
+**Versión:** 3.0  
 **Fecha:** 28 de abril de 2026  
 **Estado:** ✅ Aprobado
 
 ---
 
-## Índice de Contenido
+## Índice Interno
 
-1. [Propósito de este documento](#1-propósito-de-este-documento)
+1. [Propósito](#1-propósito)
 2. [Estructura documental](#2-estructura-documental)
-3. [Despliegue confirmado por FTP](#3-despliegue-confirmado-por-ftp)
-4. [No uso de Composer en servidor](#4-no-uso-de-composer-en-servidor)
-5. [Desarrollo completo en Codespace](#5-desarrollo-completo-en-codespace)
-6. [No ejecución de comandos en servidor](#6-no-ejecución-de-comandos-en-servidor)
-7. [Directorios WA/WP confirmados](#7-directorios-wawp-confirmados)
-8. [Separación entre aplicación WA y WordPress](#8-separación-entre-aplicación-wa-y-wordpress)
-9. [Slim como framework base en raíz del repositorio](#9-slim-como-framework-base-en-raíz-del-repositorio)
-10. [Rutas de despliegue sin subdirectorios fijos](#10-rutas-de-despliegue-sin-subdirectorios-fijos)
-11. [URL pública confirmada](#11-url-pública-confirmada)
-12. [Despliegue mediante agente desplegador](#12-despliegue-mediante-agente-desplegador)
-13. [Reescritura de URLs con .htaccess](#13-reescritura-de-urls-con-htaccess)
-14. [Variables de entorno con .env](#14-variables-de-entorno-con-env)
-15. [Primer despliegue: estructura completa base](#15-primer-despliegue-estructura-completa-base)
-16. [Repositorio como base clonable](#16-repositorio-como-base-clonable)
-17. [Decisiones técnicas de framework](#17-decisiones-técnicas-de-framework)
-18. [Dependencias futuras: Etapa 2](#18-dependencias-futuras-etapa-2)
-19. [Datos del servidor](#19-datos-del-servidor)
-20. [Elementos fuera de alcance de Etapa 1](#20-elementos-fuera-de-alcance-de-etapa-1)
+3. [Método de despliegue](#3-método-de-despliegue)
+4. [No Composer en servidor](#4-no-composer-en-servidor)
+5. [Desarrollo en Codespace](#5-desarrollo-en-codespace)
+6. [No comandos en servidor](#6-no-comandos-en-servidor)
+7. [Arquitectura WA / WordPress](#7-arquitectura-wa--wordpress)
+8. [Slim en raíz del repositorio](#8-slim-en-raíz-del-repositorio)
+9. [Rutas de despliegue](#9-rutas-de-despliegue)
+10. [URL pública](#10-url-pública)
+11. [Agente desplegador](#11-agente-desplegador)
+12. [Reescritura de URLs](#12-reescritura-de-urls)
+13. [Variables de entorno](#13-variables-de-entorno)
+14. [Framework Slim 4.x](#14-framework-slim-4x)
+15. [Repositorio clonable](#15-repositorio-clonable)
+16. [Dependencias futuras](#16-dependencias-futuras)
+17. [Elementos fuera de alcance](#17-elementos-fuera-de-alcance)
+18. [Referencias](#18-referencias)
 
 ---
 
-## 1. Propósito de este documento
+## 1. Propósito
 
 Documento único que consolida:
 - **Índice** de toda la documentación de implantación
 - **Todas las decisiones confirmadas** (generales + Etapa 1)
-- **Datos del servidor** y dependencias futuras
 
 Sustituye a: `00-decisiones-generales-implantacion.md` v1.0, `10-Decisiones-Etapa01-Slim-FTP.md` v1.0
 
@@ -48,54 +45,42 @@ Sustituye a: `00-decisiones-generales-implantacion.md` v1.0, `10-Decisiones-Etap
 |-----------|-----------|--------------|--------|
 | **`00-INDICE-Implantacion.md`** | Índice + decisiones confirmadas (este documento) | — | ✅ Activo |
 | **`10-Plan-Etapa01-Slim-FTP.md`** | Plan de trabajo: objetivo, alcance, actividades, criterios | `00-INDICE-Implantacion.md` | ✅ Activo |
-| **`20-Operaciones-Etapa01-Slim-FTP.md`** | Despliegue, verificación, pendientes | `10-Plan-Etapa01-Slim-FTP.md` | ✅ Activo |
-| `wa-server-info-2026-04-28-101933.json` | Datos técnicos del servidor (informativo) | — | ℹ️ Referencia |
-| `wp-Información de salud del sitio.txt` | Datos de WordPress (informativo) | — | ℹ️ Referencia |
-| `Etapa01_Slim-Despliegue-FTP.md` | **Transición**: documento original descompuesto | — | 🔄 Sustituido |
-| `00-decisiones-generales-implantacion.md` v1.0 | **Transición**: contenido consolidado aquí | — | 🔄 Sustituido |
-| `10-Decisiones-Etapa01-Slim-FTP.md` v1.0 | **Transición**: contenido consolidado aquí | — | 🔄 Sustituido |
-| `20-Alcance-Etapa01-Slim-FTP.md` v1.0 | **Transición**: contenido en 10-Plan | — | 🔄 Sustituido |
-| `30-Plan-Etapa01-Slim-FTP.md` v1.0 | **Transición**: contenido en 10-Plan | — | 🔄 Sustituido |
-| `40-Despliegue-Etapa01-Slim-FTP.md` v1.0 | **Transición**: contenido en 20-Operaciones | — | 🔄 Sustituido |
-| `50-Verificacion-Etapa01-Slim-FTP.md` v1.0 | **Transición**: contenido en 20-Operaciones | — | 🔄 Sustituido |
-| `60-Pendientes-Etapa01-Slim-FTP.md` v1.0 | **Transición**: contenido en 20-Operaciones | — | 🔄 Sustituido |
+| **`20-Operaciones-Etapa01-Slim-FTP.md`** | Despliegue, verificación, diagnóstico, pendientes | `10-Plan-Etapa01-Slim-FTP.md` | ✅ Activo |
+| `10-Diagnostico-Revision-Implantacion.md` | Diagnóstico de revisión | — | ℹ️ Referencia |
+| `20-Verificacion-Tecnica-Context7.md` | Verificación técnica con Context7 | — | ℹ️ Referencia |
+| `wa-server-info-2026-04-28-101933.json` | Datos técnicos del servidor | — | ℹ️ Referencia |
+| `wp-Información de salud del sitio.txt` | Salud de WordPress | — | ℹ️ Referencia |
+
+### Archivos archivados
+
+Los documentos v1.0 originales se movieron a `pre-proyecto/_archivo/implantacion-legado/`:
+`Etapa01_Slim-Despliegue-FTP.md`, `00-decisiones-generales-implantacion.md`, `10-Decisiones-Etapa01-Slim-FTP.md`, `20-Alcance-Etapa01-Slim-FTP.md`, `30-Plan-Etapa01-Slim-FTP.md`, `40-Despliegue-Etapa01-Slim-FTP.md`, `50-Verificacion-Etapa01-Slim-FTP.md`, `60-Pendientes-Etapa01-Slim-FTP.md`
 
 ### Jerarquía de lectura
 
 ```
-00-INDICE-Implantacion.md (decisiones confirmadas)
+00-INDICE-Implantacion.md (decisiones)
 │
-└── 10-Plan-Etapa01-Slim-FTP.md (qué hacer y cómo)
+└── 10-Plan-Etapa01-Slim-FTP.md (plan)
     │
     └── 20-Operaciones-Etapa01-Slim-FTP.md (ejecución)
 ```
 
-### Orden de lectura recomendado
-
-1. `00-INDICE-Implantacion.md` — Decisiones (este documento)
-2. `10-Plan-Etapa01-Slim-FTP.md` — Plan
-3. `20-Operaciones-Etapa01-Slim-FTP.md` — Operaciones
+Orden recomendado: `00-INDICE` → `10-Plan` → `20-Operaciones`.
 
 ---
 
-## 3. Despliegue confirmado por FTP
+## 3. Método de despliegue
 
-**Decisión:** El método de despliegue al servidor compartido será FTP/FTPS.
+**Decisión:** FTP/FTPS explícito (FTP sobre TLS).
 
-**Justificación:** El hosting compartido no proporciona acceso SSH/SFTP. FTP es el método estándar soportado. Las credenciales están disponibles y configuradas en variables de entorno.
+**Justificación:** El hosting compartido no proporciona acceso SSH/SFTP.
 
-| Parámetro | Valor |
-|-----------|-------|
-| **Protocolo** | FTPS explícito (FTP sobre TLS) |
-| **Servidor** | `ftp.bee-viva.es` |
-| **Puerto** | 21 |
-| **Cifrado** | TLS recomendado |
-
-**Referencia:** `wa-server-info-2026-04-28-101933.json`
+Los valores de configuración (servidor, puerto, usuario, ruta target) se registran en `inventario_recursos.md` — consultar antes de desplegar.
 
 ---
 
-## 4. No uso de Composer en servidor
+## 4. No Composer en servidor
 
 **Decisión:** No se ejecutará Composer en el servidor de producción.
 
@@ -106,7 +91,7 @@ Sustituye a: `00-decisiones-generales-implantacion.md` v1.0, `10-Decisiones-Etap
 
 ---
 
-## 5. Desarrollo completo en Codespace
+## 5. Desarrollo en Codespace
 
 **Decisión:** Todo el desarrollo se realizará en el GitHub Codespace/workspace.
 
@@ -119,47 +104,24 @@ Sustituye a: `00-decisiones-generales-implantacion.md` v1.0, `10-Decisiones-Etap
 
 ---
 
-## 6. No ejecución de comandos en servidor
+## 6. No comandos en servidor
 
 **Decisión:** No se ejecutará ningún comando en el servidor remoto. El hosting compartido no proporciona SSH, solo transferencia de archivos.
 
 ---
 
-## 7. Directorios WA/WP confirmados
+## 7. Arquitectura WA / WordPress
 
-| Entorno | Directorio | Usuario FTP |
-|---------|------------|-------------|
-| **WA** | `/home/beevivac/stg2.cofemlevante.es` | `ftp-wa@levantecofem.es` |
-| **WP** | `/home/beevivac/levantecofem_es` | `ftp-cfle-wp@levantecofem.es` |
+**Decisión:** La Web-App será una aplicación PHP independiente de WordPress, usando Slim sin interferir con WP. La comunicación WA↔WP será vía endpoint REST personalizado (etapa 2+) y acceso directo a BD de WP.
 
-WA y WordPress están en directorios separados del mismo hosting, confirmando la arquitectura de aplicación externa a WordPress.
+Los directorios exactos de WA y WP se registran en `inventario_recursos.md`.
 
 ---
 
-## 8. Separación entre aplicación WA y WordPress
-
-**Decisión:** La Web-App será una aplicación PHP independiente de WordPress, usando Slim sin interferir con WP.
-
-```
-/home/beevivac/
-├── stg2.cofemlevante.es/     # WA (despliegue directo)
-└── levantecofem_es/          # WP + WooCommerce
-```
-
-La comunicación WA↔WP será vía endpoint REST personalizado (etapa 2+) y acceso directo a BD de WP.
-
----
-
-## 9. Slim como framework base en raíz del repositorio
+## 8. Slim en raíz del repositorio
 
 **Decisión:** Slim se integra como framework base real del desarrollo en la **raíz del repositorio**. `pre-proyecto/` es solo para documentación.
 
-**Justificación:**
-- `pre-proyecto/` es exclusivo para documentación
-- El código va en la raíz para facilitar el despliegue
-- La estructura del repositorio refleja la estructura de despliegue
-
-**Estructura correcta:**
 ```
 raíz/
 ├── app/Controllers/           # Controladores
@@ -167,54 +129,40 @@ raíz/
 ├── app/Middleware/            # Middleware
 ├── app/Config/                # Configuración
 ├── public/index.php           # Front controller
+├── public/.htaccess           # Reescritura URLs
 ├── vendor/                    # Dependencias
 ├── config/app.php             # Config. app
 ├── config/database.php        # Config. BD
 ├── config/routes.php          # Rutas
 ├── composer.json
 ├── composer.lock
-├── .env                       # Variables de entorno (NO versionado)
-├── .env.example               # Ejemplo (versionado)
-├── .htaccess                  # Reescritura URLs (public/)
+├── .env                       # NO versionado
+├── .env.example               # Versionado
+├── .htaccess                  # Redirección raíz → public/
 └── pre-proyecto/              # SOLO documentación
 ```
 
-**Estructura INCORRECTA (no usar):**
-```
-raíz/
-├── pre-proyecto/wa-slim/      # ❌ NO: código dentro de pre-proyecto/
-```
+**Estructura INCORRECTA (no usar):** Código dentro de `pre-proyecto/wa-slim/` o cualquier subdirectorio fijo.
 
 ---
 
-## 10. Rutas de despliegue sin subdirectorios fijos
+## 9. Rutas de despliegue
 
-**Decisión:** El despliegue se realiza directamente en el directorio base del dominio WA, sin crear subdirectorios `wa-slim/` ni ningún otro subdirectorio fijo.
+**Decisión:** El despliegue se realiza directamente en el directorio base del dominio WA, sin crear subdirectorios fijos. La configuración debe permitir cambiar rutas sin alterar la lógica del proyecto.
 
-**Justificación:** Los directorios pueden cambiar. La configuración debe permitir cambiar rutas sin alterar la lógica del proyecto. No acoplar el desarrollo a rutas absolutas.
-
-| Parámetro | Valor |
-|-----------|-------|
-| **Dominio WA** | `stg2.cofemlevante.es` |
-| **Directorio base** | `/home/beevivac/stg2.cofemlevante.es/` |
-| **Subdirectorio** | Ninguno (despliegue directo) |
-| **FTP target** | `/home/beevivac/stg2.cofemlevante.es/` |
+Los valores específicos (dominio, directorio base) se registran en `inventario_recursos.md`.
 
 ---
 
-## 11. URL pública confirmada
+## 10. URL pública
 
-**Decisión:** `https://stg2.cofemlevante.es/`
-
-Esta es la URL pública definitiva para la Web-App en el entorno de staging. No se usará `https://stg2.cofemlevante.es/wa-slim/` ni ninguna otra variante.
+**Decisión:** La URL pública definitiva para la Web-App se define en `inventario_recursos.md`. No se usará ninguna variante con subdirectorios.
 
 ---
 
-## 12. Despliegue mediante agente desplegador
+## 11. Agente desplegador
 
-**Decisión:** El despliegue se realiza **exclusivamente mediante el agente `@ftp-deployer`**. No se crea ni usa el script `deploy.sh`.
-
-**Justificación:** El agente `@ftp-deployer` (`.opencode/agents/ftp-deployer.md`) automatiza todo el flujo: pre-validación, preparación del paquete, conexión FTP, transferencia, verificación e informe. Eliminar el script reduce puntos de fallo y mantiene un único punto de ejecución.
+**Decisión:** El despliegue se realiza **exclusivamente mediante el agente `@ftp-deployer`** (`.opencode/agents/ftp-deployer.md`). No se crea ni usa `deploy.sh`. Queda prohibido CI/CD, FTP manual o cualquier otro método.
 
 **Invocación:**
 ```
@@ -223,156 +171,61 @@ Esta es la URL pública definitiva para la Web-App en el entorno de staging. No 
 
 ---
 
-## 13. Reescritura de URLs con .htaccess
+## 12. Reescritura de URLs
 
-**Decisión:** Sí usar `.htaccess` para reescritura de URLs en el directorio `public/`.
+**Decisión:** Sí usar `.htaccess` para reescritura de URLs. Se emplean dos niveles:
+1. **Raíz** (`.htaccess`): Redirige todo el tráfico a `public/`
+2. **`public/.htaccess`**: Redirige a `index.php` para Slim
 
-**Archivo `public/.htaccess`:**
-```
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^ index.php [QSA,L]
-</IfModule>
-```
-
-**Justificación:** Permite que Slim maneje rutas como `/hello` sin necesidad de `/public/index.php/hello`.
+Contenido y especificaciones en `10-Plan-Etapa01-Slim-FTP.md` §6.
 
 ---
 
-## 14. Variables de entorno con .env
+## 13. Variables de entorno
 
-**Decisión:** Usar archivo `.env` (no versionado) para configuración de variables de entorno, con `.env.example` (versionado) como plantilla. No se usan GitHub Secrets para configuración.
+**Decisión:** Usar archivo `.env` (no versionado) para configuración, con `.env.example` (versionado) como plantilla. Las credenciales sensibles se pasan exclusivamente por variables de entorno del sistema, nunca en `.env` versionado.
 
-**Justificación:** `.env` permite cambiar configuración sin depender del proveedor de secrets, facilita el desarrollo local y la clonación del repositorio para otros proyectos.
-
-**Contenido de `.env`:**
-```bash
-# FTP (credenciales sensibles vía entorno)
-FTP_SERVER=ftp.bee-viva.es
-FTP_USER=ftp-wa@levantecofem.es
-FTP_PASSWORD=              # Poner vía variable de entorno
-
-# Aplicación (configurables)
-APP_ENV=development
-APP_DEBUG=true
-```
-
-**Nota:** Las contraseñas sensibles (`FTP_PASSWORD`, `CONTRASENYA_FTP_WA`) se pueden pasar como variables de entorno además del `.env`, pero la configuración base (rutas, servidores, usuarios) va en `.env`.
+La lista completa de variables se registra en `inventario_recursos.md`.
 
 ---
 
-## 15. Primer despliegue: estructura completa base
+## 14. Framework Slim 4.x
 
-**Decisión:** El primer despliegue incluirá todo lo necesario: `app/`, `config/`, bootstrap y estructura completa base. No solo los archivos mínimos.
+**Decisión:** Slim PHP 4.x como framework base. Dependencias y justificación técnica en `10-Plan-Etapa01-Slim-FTP.md` §6.
 
-**Incluir en despliegue:**
-- `public/index.php` — Front controller
-- `public/.htaccess` — Reescritura de URLs
-- `vendor/` — Dependencias
-- `composer.json` y `composer.lock`
-- `app/` — Estructura base (Controllers, Services, Middleware, Config)
-- `config/` — Configuración (app.php, database.php, routes.php)
-- `.env` — Variables de entorno
-
-**Excluir:**
-- `.git/` — No necesario en producción
-- `.gitignore`
-- `pre-proyecto/` — Solo documentación
+No se crea agente o skill específico para Slim. La skill `context7` (`.opencode/skills/context7/SKILL.md`) permite consultar documentación actualizada.
 
 ---
 
-## 16. Repositorio como base clonable
+## 15. Repositorio clonable
 
-**Decisión:** El repositorio debe servir como base o andamio clonable para otros proyectos futuros.
+**Decisión:** El repositorio debe servir como base clonable para otros proyectos futuros.
 
 **Principios:**
 - **Reutilizable:** Componentes genéricos, no específicos de este proyecto
-- **Configurable:** Rutas, credenciales, opciones en `.env` y `config/*.php`
+- **Configurable:** Rutas, credenciales, opciones en `.env` e `inventario_recursos.md`
 - **No acoplado:** Sin dependencias a rutas concretas del hosting actual
 - **Documentado:** Instrucciones claras para clonar y adaptar
 
 ---
 
-## 17. Decisiones técnicas de framework
+## 16. Dependencias futuras
 
-### Framework seleccionado: Slim PHP 4.x
-
-**Justificación** (de `pre-proyecto/Estudios/02-Comparativa-Frameworks-PHP.md`):
-
-| Criterio | Puntuación |
-|----------|------------|
-| Madurez y comunidad | 5/5 (12.3k stars) |
-| Documentación | 5/5 (slimframework.com/docs/v4/) |
-| Encaje requisitos | 5/5 (middleware PSR-15) |
-| Tests/Calidad | 5/5 (PHPUnit, Coveralls, PHPStan) |
-| **Total ponderado** | **4.9/5** |
-
-### Dependencias mínimas (Etapa 1)
-
-```json
-{
-    "require": {
-        "php": ">=8.1",
-        "slim/slim": "^4.15",
-        "slim/psr7": "^1.7"
-    }
-}
-```
-
-### Evaluación: agente o skill para interactuar con Slim
-
-**Conclusión: No se recomienda crear agente o skill específico en esta etapa.**
-
-**Justificación:**
-1. El alcance actual no justifica la complejidad adicional
-2. La skill `context7` (`.skills/context7/SKILL.md`) ya permite consultar documentación actualizada de Slim
-3. El agente general es suficiente con ayuda de context7
-4. Principio de mínima complejidad
-
-**Reconsiderar en Etapa 2+** si el uso de Slim es intensivo o hay patrones repetitivos que automatizar.
-
----
-
-## 18. Dependencias futuras: Etapa 2
-
-| Dependencia | Propósito | Incluir en Etapa |
-|-------------|-----------|------------------|
+| Dependencia | Propósito | Etapa |
+|-------------|-----------|-------|
 | `monolog/monolog` | Logging estructurado | 2 |
 | `illuminate/database` | Eloquent ORM (acceso BD WordPress) | 2 |
 | `guzzlehttp/guzzle` | Cliente HTTP (llamadas a APIs) | 2 |
 | `slim/csrf` | Protección CSRF/Nonces | 2 |
 
-Se incluirán en Etapa 2 cuando Slim esté integrado, el despliegue validado y exista necesidad real.
+Se incluirán cuando Slim esté integrado, el despliegue validado y exista necesidad real.
 
 ---
 
-## 19. Datos del servidor
+## 17. Elementos fuera de alcance
 
-Fuente: `wa-server-info-2026-04-28-101933.json`
-
-| Parámetro | Valor |
-|-----------|-------|
-| **PHP versión** | 8.3.30 |
-| **PHP SAPI** | litespeed |
-| **Sistema operativo** | Linux 5.14.0 |
-| **Servidor web** | LiteSpeed |
-| **Memoria límite** | 256M |
-| **Tiempo máximo ejecución** | 30s |
-| **Upload max filesize** | 32M |
-| **Post max size** | 128M |
-
-**Extensiones:** mysqli, pdo_mysql, curl, gd, zip, json, dom, fileinfo, mbstring, xml
-
-**WordPress:** v6.9.4, WooCommerce 10.4.4, MariaDB 11.4.10
-
----
-
-## 20. Elementos fuera de alcance de Etapa 1
-
-| Elemento | Etapa |
-|----------|-------|
+| Elemento | Etapa prevista |
+|----------|----------------|
 | Autenticación contra WordPress | 2+ |
 | Logging estructurado (Monolog) | 2+ |
 | Eloquent ORM (acceso a BD) | 2+ |
@@ -382,13 +235,29 @@ Fuente: `wa-server-info-2026-04-28-101933.json`
 | Subida de PDFs | 3+ |
 | Tabla personalizada en WordPress | 3+ |
 | Selección de proveedor de IA | 3+ |
-| Definición de `DIR_ALMACEN_PDF` | 3+ |
 | CRUD de proveedores de IA | 3+ |
 | Formulario de revisión | 3+ |
 | Mapeo de campos WooCommerce | 4+ |
 | Integración con API WooCommerce | 4+ |
 
-**Criterio:** Cualquier funcionalidad no necesaria para integrar Slim y validar el despliegue queda excluida.
+**Criterio:** Cualquier funcionalidad no necesaria para integrar Slim y validar el despliegue queda excluida de Etapa 1.
+
+---
+
+## 18. Referencias
+
+| Documento | Ruta |
+|-----------|------|
+| Inventario de recursos | `.gobernanza/inventario_recursos.md` |
+| Reglas de gobernanza | `.gobernanza/reglas_universales.md` |
+| Plan Etapa 1 | `10-Plan-Etapa01-Slim-FTP.md` |
+| Operaciones Etapa 1 | `20-Operaciones-Etapa01-Slim-FTP.md` |
+| Diagnóstico | `10-Diagnostico-Revision-Implantacion.md` |
+| Verificación técnica | `20-Verificacion-Tecnica-Context7.md` |
+| Info. servidor WA | `wa-server-info-2026-04-28-101933.json` |
+| Agente ftp-deployer | `.opencode/agents/ftp-deployer.md` |
+| Especificación agente | `pre-proyecto/agentica/ftp-deployer-agent-spec.md` |
+| Slim docs | https://www.slimframework.com/docs/v4/ |
 
 ---
 
@@ -396,7 +265,8 @@ Fuente: `wa-server-info-2026-04-28-101933.json`
 
 | Versión | Fecha | Cambio | Autor |
 |---------|-------|--------|-------|
-| 2.0 | 28 abr 2026 | Consolidación: índice + todas las decisiones en un documento. Sustituye a 00-decisiones-generales v1.0 y 10-Decisiones v1.0 | Equipo de desarrollo |
+| 3.0 | 28 abr 2026 | Eliminación de datos hardcodeados → referencias a inventario. Eliminación de redundancias con 10-Plan y 20-Operaciones. Corrección de ruta de skill. | OpenCode |
+| 2.0 | 28 abr 2026 | Consolidación: índice + todas las decisiones en un documento | Equipo de desarrollo |
 
 ---
 

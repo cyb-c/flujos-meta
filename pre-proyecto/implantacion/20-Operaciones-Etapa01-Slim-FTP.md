@@ -1,44 +1,43 @@
 # Operaciones de Implantación — Etapa 1: Slim + FTP
 
-**Versión:** 2.0  
+**Versión:** 3.0  
 **Fecha:** 28 de abril de 2026  
 **Estado:** ✅ Aprobado
 
 ---
 
-## Índice de Contenido
+## Índice Interno
 
-1. [Propósito y alcance del documento](#1-propósito-y-alcance-del-documento)
-2. [Preparación del despliegue](#2-preparación-del-despliegue)
-3. [Despliegue mediante agente](#3-despliegue-mediante-agente)
-4. [Verificación post-despliegue](#4-verificación-post-despliegue)
-5. [Diagnóstico de errores](#5-diagnóstico-de-errores)
-6. [Seguridad](#6-seguridad)
-7. [Pendientes y seguimiento](#7-pendientes-y-seguimiento)
-8. [Referencias](#8-referencias)
+1. [Propósito](#1-propósito)
+2. [Pre-requisitos obligatorios](#2-pre-requisitos-obligatorios)
+3. [Preparación del paquete](#3-preparación-del-paquete)
+4. [Despliegue mediante agente](#4-despliegue-mediante-agente)
+5. [Verificación post-despliegue](#5-verificación-post-despliegue)
+6. [Diagnóstico de errores](#6-diagnóstico-de-errores)
+7. [Seguridad](#7-seguridad)
+8. [Pendientes y seguimiento](#8-pendientes-y-seguimiento)
+9. [Referencias](#9-referencias)
 
 ---
 
-## 1. Propósito y alcance del documento
+## 1. Propósito
 
 Procedimientos operativos de Etapa 1: despliegue (solo mediante agente), verificación, diagnóstico y seguimiento de pendientes.
 
 Sustituye a: `40-Despliegue-Etapa01-Slim-FTP.md` v1.0, `50-Verificacion-Etapa01-Slim-FTP.md` v1.0, `60-Pendientes-Etapa01-Slim-FTP.md` v1.0  
-Depende de: `10-Plan-Etapa01-Slim-FTP.md` (plan de trabajo)
+Depende de: `10-Plan-Etapa01-Slim-FTP.md` (plan de trabajo), `00-INDICE-Implantacion.md` (decisiones), `.gobernanza/inventario_recursos.md` (valores de configuración)
 
 ---
 
-## 2. Preparación del despliegue
+## 2. Pre-requisitos obligatorios
 
-### Pre-requisitos obligatorios
-
-Antes de desplegar, verificar que las siguientes acciones están completadas (responsabilidad del equipo, ejecutar antes de Fase 1 del plan):
+Estas acciones son responsabilidad del equipo. Deben completarse antes de la Fase 1 del plan. Si alguna no puede completarse, la Etapa 1 no debe iniciarse.
 
 | # | Requisito | Verificación |
 |---|-----------|--------------|
 | 0.1 | Credenciales FTP disponibles | `echo $CONTRASENYA_FTP_WA` no vacío |
-| 0.2 | Acceso FTP desde Codespace | `nc -zv ftp.bee-viva.es 21` → éxito |
-| 0.3 | Acceso a logs del servidor | Ruta confirmada: `/home/beevivac/logs/stg2.cofemlevante.es/error.log` |
+| 0.2 | Acceso FTP desde Codespace | `nc -zv` según servidor en `inventario_recursos.md` → éxito |
+| 0.3 | Acceso a logs del servidor | Ruta confirmada según `inventario_recursos.md` |
 
 ### Pre-requisitos de desarrollo
 
@@ -47,11 +46,14 @@ Antes de desplegar, verificar que las siguientes acciones están completadas (re
 | Slim instalado | `composer show slim/slim` |
 | Dependencias OK | `vendor/` existe |
 | Front controller | `public/index.php` existe |
-| `.htaccess` | `public/.htaccess` existe |
-| `.env` configurado | Variables FTP_SERVER, FTP_USER, FTP_TARGET_PATH definidas |
+| `.htaccess` raíz | `.htaccess` existe (redirección a `public/`) |
+| `.htaccess` public | `public/.htaccess` existe |
+| `.env` configurado | Variables según `inventario_recursos.md` y `.env.example` |
 | lftp disponible | `which lftp` |
 
-### Preparación del paquete
+---
+
+## 3. Preparación del paquete
 
 ```bash
 composer install --no-dev --optimize-autoloader
@@ -64,6 +66,7 @@ du -sh vendor/   # Esperado: < 4 MB
 |----------|---------|
 | `public/index.php` | ✅ |
 | `public/.htaccess` | ✅ |
+| `.htaccess` (raíz) | ✅ |
 | `vendor/` | ✅ |
 | `composer.json` | ✅ |
 | `composer.lock` | ✅ |
@@ -76,56 +79,55 @@ du -sh vendor/   # Esperado: < 4 MB
 
 ---
 
-## 3. Despliegue mediante agente
+## 4. Despliegue mediante agente
 
 El despliegue se realiza **exclusivamente mediante el agente `@ftp-deployer`**. No se usa ni crea `deploy.sh`.
 
 ### Implementación del agente
 
-- **Archivo:** `.opencode/agents/ftp-deployer.md`
-- **Especificación:** `pre-proyecto/agentica/ftp-deployer-agent-spec.md`
-- **Modo:** `subagent`
-- **Invocación:** `@ftp-deployer despliega la Web-App`
+| Campo | Valor |
+|-------|-------|
+| **Archivo** | `.opencode/agents/ftp-deployer.md` |
+| **Especificación** | `pre-proyecto/agentica/ftp-deployer-agent-spec.md` |
+| **Modo** | `subagent` |
+| **Invocación** | `@ftp-deployer despliega la Web-App` |
 
 ### Configuración del agente
 
-Variables de entorno que el agente debe leer:
+Las variables de entorno que el agente lee se definen en `inventario_recursos.md` (secciones Secrets para Despliegue y Variables de Entorno). El agente:
 
-| Variable | Propósito | Valor |
-|----------|-----------|-------|
-| `FTP_SERVER` | Servidor FTP | `ftp.bee-viva.es` |
-| `FTP_USER` | Usuario FTP | `ftp-wa@levantecofem.es` |
-| `FTP_PASSWORD` | Contraseña FTP | Desde variable de entorno (`CONTRASENYA_FTP_WA`) |
-| `FTP_TARGET_PATH` | Directorio target | `/home/beevivac/stg2.cofemlevante.es/` |
-| `FTP_PORT` | Puerto | `21` |
+1. Exporta `LFTP_PASSWORD` desde la variable de contraseña del inventario
+2. Conecta a `FTP_SERVER:FTP_PORT` con FTPS explícito
+3. Configura `set ftp:ssl-force on` y `set ftp:ssl-protect-data on` para TLS
 
 ### Flujo del agente
 
-1. **Pre-validación:** Verifica directorio fuente, archivos esenciales y credenciales
-2. **Preparación:** Ejecuta `composer install --no-dev --optimize-autoloader` si necesita
-3. **Conexión FTP:** Conecta a `ftp.bee-viva.es:21` con FTPS explícito
-4. **Transferencia:** `lftp mirror --reverse --delete ./ .` sobre `FTP_TARGET_PATH`
-5. **Verificación:** Confirma archivos transferidos
-6. **Informe:** Resumen estructurado con resultado
+1. **Pre-validación:** Verifica directorio fuente (raíz), archivos esenciales y credenciales
+2. **Verificar cliente:** Comprueba lftp; si no, lo instala
+3. **Preparar paquete:** Ejecuta `composer install --no-dev --optimize-autoloader`
+4. **Conectar FTP:** Exporta `LFTP_PASSWORD`, conecta con FTPS explícito + SSL
+5. **Transferir:** `lftp mirror --reverse --delete ./ .` sobre `FTP_TARGET_PATH`
+6. **Verificar:** Confirma archivos transferidos
+7. **Informar:** Resumen estructurado con resultado
 
 ### Respuesta esperada
 
 ```
 ✅ Despliegue completado
 📦 Origen:  raíz del repositorio (~3 MB)
-🎯 Destino: /home/beevivac/stg2.cofemlevante.es/
-✅ HTTP 200: https://stg2.cofemlevante.es/
+🎯 Destino: (según inventario_recursos.md)
+✅ HTTP 200: (según inventario_recursos.md)
 ```
 
 ---
 
-## 4. Verificación post-despliegue
+## 5. Verificación post-despliegue
 
 ### Checklist inmediato
 
-- [ ] `curl -I https://stg2.cofemlevante.es/` → HTTP 200
-- [ ] `curl https://stg2.cofemlevante.es/` → "Hola mundo"
-- [ ] `curl https://stg2.cofemlevante.es/hello` → "Hola mundo desde Slim"
+- [ ] `curl -I` según URL de `inventario_recursos.md` → HTTP 200
+- [ ] `curl` según URL → "Hola mundo"
+- [ ] `curl` según URL + `/hello` → "Hola mundo desde Slim"
 - [ ] Tiempo de respuesta < 2s
 
 ### Checklist de archivos (24h)
@@ -141,6 +143,7 @@ Variables de entorno que el agente debe leer:
 curl -I https://stg2.cofemlevante.es/
 curl https://stg2.cofemlevante.es/
 curl -w "%{time_total}" -o /dev/null -s https://stg2.cofemlevante.es/
+curl https://stg2.cofemlevante.es/hello
 
 # Archivos (vía FTP)
 lftp -e "ls -la /home/beevivac/stg2.cofemlevante.es/; bye"
@@ -158,12 +161,12 @@ lftp -e "ls -la /home/beevivac/stg2.cofemlevante.es/; bye"
 
 ---
 
-## 5. Diagnóstico de errores
+## 6. Diagnóstico de errores
 
 ### Error 404
 
 **Causas:** Ruta incorrecta, `.htaccess` faltante, front controller no encontrado.  
-**Solución:** Verificar `public/.htaccess` y `public/index.php` existen en servidor.
+**Solución:** Verificar `.htaccess` (raíz y `public/`) y `public/index.php` existen en servidor.
 
 ### Error 500
 
@@ -183,43 +186,42 @@ composer dump-autoload --optimize
 
 **Verificar:**
 ```bash
-nc -zv ftp.bee-viva.es 21
-lftp -e "open ftp.bee-viva.es; user ftp-wa@levantecofem.es $CONTRASENYA_FTP_WA; ls; bye"
+nc -zv ${FTP_SERVER} ${FTP_PORT}
+lftp -e "set ftp:ssl-force on; set ftp:ssl-protect-data on; open -u ${FTP_USER},${FTP_PASSWORD} ${FTP_SERVER}; ls; bye"
 ```
 
 ### Credenciales no encontradas
 
-**Verificar:** La variable de entorno `CONTRASENYA_FTP_WA` está definida y `FTP_PASSWORD` la referencia.
+**Verificar:** La variable definida en `inventario_recursos.md` está disponible y no vacía.
 
 ---
 
-## 6. Seguridad
+## 7. Seguridad
 
 | Práctica | Correcto | Incorrecto |
 |----------|----------|------------|
-| Almacenamiento | Variables de entorno / `.env` | Hardcodeadas en código |
-| Transmisión | FTPS explícito (TLS) | FTP plano |
+| Almacenamiento | Variables de entorno / `.env` (NO versionado) | Hardcodeadas en código |
+| Transmisión | FTPS explícito con `set ftp:ssl-force on` | FTP plano |
 | Logs | Nunca mostrar contraseñas | `echo $CONTRASENYA_FTP_WA` |
-| Comandos | Pasar como variable | Argumento visible en `ps` |
+| Comandos | Variable de entorno (`LFTP_PASSWORD`) | Argumento visible en `ps` |
 
 Permisos post-despliegue:
 ```bash
-lftp -e "ls -la /home/beevivac/stg2.cofemlevante.es/; bye"
 # Archivos: 644, Directorios: 755
 ```
 
 ---
 
-## 7. Pendientes y seguimiento
+## 8. Pendientes y seguimiento
 
 ### Acciones del equipo
 
 | # | Acción | Prioridad | Responsable | Estado |
 |---|--------|-----------|-------------|--------|
-| 1 | Verificar credenciales FTP | Alta | Equipo | ⏳ Pendiente |
+| 1 | Verificar credenciales FTP según inventario | Alta | Equipo | ⏳ Pendiente |
 | 2 | Confirmar acceso FTP desde Codespace | Alta | Equipo | ⏳ Pendiente |
 | 3 | Proporcionar acceso a logs del servidor | Media | Equipo | ⏳ Pendiente |
-| 4 | Aprobar documentación de implantación | Alta | Equipo | ⏳ Pendiente |
+| 4 | Aprobar documentación de implantación v3.0 | Alta | Equipo | ⏳ Pendiente |
 
 ### Acciones del desarrollador
 
@@ -230,32 +232,38 @@ lftp -e "ls -la /home/beevivac/stg2.cofemlevante.es/; bye"
 | 3 | Instalar lftp | Alta | ⏳ Pendiente |
 | 4 | Primer despliegue | Alta | ⏳ Pendiente |
 
-### Decisiones pendientes
+### Decisiones resueltas
 
 | Decisión | Resolución |
 |----------|------------|
-| ~~¿Crear deploy.sh o solo agente?~~ | ✅ **Resuelto:** Solo agente, no crear `deploy.sh` |
-| ~~¿.htaccess para reescritura?~~ | ✅ **Resuelto:** Sí, incluir `public/.htaccess` |
-| ~~¿.env o GitHub Secrets?~~ | ✅ **Resuelto:** `.env` para configuración |
-| ~~¿Incluir app/ y config/ en primer despliegue?~~ | ✅ **Resuelto:** Sí, estructura completa base |
+| ~~¿Crear deploy.sh o solo agente?~~ | ✅ Solo agente, no crear `deploy.sh` |
+| ~~¿.htaccess para reescritura?~~ | ✅ Sí, raíz + `public/` |
+| ~~¿.env o GitHub Secrets?~~ | ✅ `.env` para configuración |
+| ~~¿Incluir app/ y config/ en primer despliegue?~~ | ✅ Sí, estructura completa base |
+| ~~¿Subdirectorio fijo?~~ | ✅ No, despliegue directo sin `wa-slim/` |
+| ~~¿Ruta de skill correcta?~~ | ✅ Corregida a `.opencode/skills/context7/SKILL.md` |
+| ~~¿Front controller sin middlewares?~~ | ✅ Corregido con `addRoutingMiddleware()` y `addErrorMiddleware()` |
 
 ### Seguimiento de Etapa 2
 
 **Dependencias para iniciar Etapa 2:**
 - [ ] Slim integrado ✅
-- [ ] Despliegue FTP validado ✅
+- [ ] Despliegue FTP validado
 - [ ] Documentación aprobada
 - [ ] Dependencias: `monolog/monolog`, `illuminate/database`, `guzzlehttp/guzzle`, `slim/csrf`
 
 ---
 
-## 8. Referencias
+## 9. Referencias
 
 | Documento | Ruta |
 |-----------|------|
-| Decisiones + índice | `00-INDICE-Implantacion.md` |
+| Decisiones e índice | `00-INDICE-Implantacion.md` |
 | Plan Etapa 1 | `10-Plan-Etapa01-Slim-FTP.md` |
-| Agente ftp-deployer | `pre-proyecto/agentica/ftp-deployer-agent-spec.md` |
+| Inventario de recursos | `.gobernanza/inventario_recursos.md` |
+| Info. servidor WA | `wa-server-info-2026-04-28-101933.json` |
+| Agente ftp-deployer | `.opencode/agents/ftp-deployer.md` |
+| Especificación agente | `pre-proyecto/agentica/ftp-deployer-agent-spec.md` |
 | lftp docs | https://lftp.yar.ru/ |
 
 ---
@@ -264,7 +272,8 @@ lftp -e "ls -la /home/beevivac/stg2.cofemlevante.es/; bye"
 
 | Versión | Fecha | Cambio | Autor |
 |---------|-------|--------|-------|
-| 2.0 | 28 abr 2026 | Consolidación de despliegue + verificación + pendientes. Sustituye a 40-Despliegue v1.0, 50-Verificacion v1.0 y 60-Pendientes v1.0 | Equipo de desarrollo |
+| 3.0 | 28 abr 2026 | Adición de configuración SSL explícita para lftp. Eliminación de valores hardcodeados → referencias a inventario. Corrección de lista de archivos a desplegar (agregado `.htaccess` raíz). Actualización de agentes a rutas v2.0. Adición de decisiones resueltas. | OpenCode |
+| 2.0 | 28 abr 2026 | Consolidación de despliegue + verificación + pendientes | Equipo de desarrollo |
 
 ---
 
