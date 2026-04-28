@@ -34,6 +34,26 @@ La numeración de los archivos sigue el orden lógico de lectura: comienza con e
 
 ---
 
+## 📁 Carpeta: `pre-proyecto/implantacion/`
+
+Documentación de implantación, despliegue y decisiones técnicas de infraestructura.
+
+| Número | Nombre del archivo | Ruta relativa | Finalidad | Dependencias | Resumen breve | Estado |
+|--------|-------------------|---------------|-----------|--------------|---------------|--------|
+| 0 | `00-decisiones-generales-implantacion.md` | `pre-proyecto/implantacion/00-decisiones-generales-implantacion.md` | Documentar decisiones técnicas generales de implantación | `02-Comparativa-Frameworks-PHP.md`, `wa-server-info-2026-04-28-101933.json` | Decisiones confirmadas: despliegue por FTP, no Composer en servidor, desarrollo en Codespace, directorios WA/WP, separación WP/WA, Slim como framework base, repositorio como base clonable. | ✅ Completado |
+| 1 | `00-INDICE-Implantacion.md` | `pre-proyecto/implantacion/00-INDICE-Implantacion.md` | Índice general de documentación de implantación | — | Índice de todos los documentos de implantación con orden de lectura, dependencias y estado. | ✅ Completado |
+| 2 | `10-Decisiones-Etapa01-Slim-FTP.md` | `pre-proyecto/implantacion/10-Decisiones-Etapa01-Slim-FTP.md` | Decisiones específicas de Etapa 1 | `00-decisiones-generales-implantacion.md` | Decisiones: Slim en raíz del repositorio, despliegue directo sin wa-slim/, rutas configurables. | ⏳ Pendiente de aprobación |
+| 3 | `20-Alcance-Etapa01-Slim-FTP.md` | `pre-proyecto/implantacion/20-Alcance-Etapa01-Slim-FTP.md` | Alcance incluido/excluido de Etapa 1 | `10-Decisiones-Etapa01-Slim-FTP.md` | Alcance: Slim integrado, despliegue FTP, prueba "Hola mundo". Excluido: autenticación, logging, ORM, etc. | ⏳ Pendiente de aprobación |
+| 4 | `30-Plan-Etapa01-Slim-FTP.md` | `pre-proyecto/implantacion/30-Plan-Etapa01-Slim-FTP.md` | Plan detallado de trabajo para Etapa 1 | `10-Decisiones-Etapa01-Slim-FTP.md`, `20-Alcance-Etapa01-Slim-FTP.md` | Plan: objetivos, requisitos, estructura, actividades, criterios de aceptación, riesgos. | ⏳ Pendiente de aprobación |
+| 5 | `40-Despliegue-Etapa01-Slim-FTP.md` | `pre-proyecto/implantacion/40-Despliegue-Etapa01-Slim-FTP.md` | Procedimiento de despliegue FTP | `30-Plan-Etapa01-Slim-FTP.md` | Despliegue: agente @ftp-deployer, script deploy.sh, consideraciones de seguridad. | ⏳ Pendiente de aprobación |
+| 6 | `50-Verificacion-Etapa01-Slim-FTP.md` | `pre-proyecto/implantacion/50-Verificacion-Etapa01-Slim-FTP.md` | Procedimiento de verificación post-despliegue | `40-Despliegue-Etapa01-Slim-FTP.md` | Verificación: HTTP tests, archivos, logs, criterios de éxito, diagnóstico. | ⏳ Pendiente de aprobación |
+| 7 | `60-Pendientes-Etapa01-Slim-FTP.md` | `pre-proyecto/implantacion/60-Pendientes-Etapa01-Slim-FTP.md` | Seguimiento de pendientes y acciones | `30-Plan-Etapa01-Slim-FTP.md` | Pendientes: acciones del equipo, del desarrollador, incidencias, decisiones. | ⏳ Pendiente de aprobación |
+| 8 | `Etapa01_Slim-Despliegue-FTP.md` | `pre-proyecto/implantacion/Etapa01_Slim-Despliegue-FTP.md` | **Documento de transición** (sustituido) | — | Documento original descompuesto en 10-60. Mantenido solo para trazabilidad histórica. | ⚠️ Sustituido |
+| 9 | `wa-server-info-2026-04-28-101933.json` | `pre-proyecto/implantacion/wa-server-info-2026-04-28-101933.json` | Información técnica del servidor WA (PHP, extensiones, configuración) | — | Dump de phpinfo() del servidor WA: PHP 8.3.30, LiteSpeed, extensiones disponibles. | ℹ️ Informativo |
+| 10 | `wp-Información de salud del sitio.txt` | `pre-proyecto/implantacion/wp-Información de salud del sitio.txt` | Información de salud del sitio WordPress | — | Site Health de WordPress: WP 6.9.4, WooCommerce 10.4.4, rutas de directorios. | ℹ️ Informativo |
+
+---
+
 ## 📁 Carpeta: `pre-proyecto/codespace/`
 
 Documentación del entorno de desarrollo y herramientas del codespace.
@@ -71,6 +91,28 @@ pre-proyecto/
 │        ▼                                         │      │
 ├── 03-Boceto_B09-ACLARATIVO.md ◄──────────────────┼──────┘
 │                                                   │
+├── implantacion/                                   │
+│   ├── 00-decisiones-generales-implantacion.md ◄───┼─────── Estudios/02-Comparativa-Frameworks-PHP.md
+│   │        │                                      │
+│   │        ├── 00-INDICE-Implantacion.md          │
+│   │        │                                      │
+│   │        ├── 10-Decisiones-Etapa01-Slim-FTP.md ◄┘
+│   │        │
+│   │        ├── 20-Alcance-Etapa01-Slim-FTP.md
+│   │        │
+│   │        ├── 30-Plan-Etapa01-Slim-FTP.md
+│   │        │
+│   │        ├── 40-Despliegue-Etapa01-Slim-FTP.md
+│   │        │
+│   │        ├── 50-Verificacion-Etapa01-Slim-FTP.md
+│   │        │
+│   │        ├── 60-Pendientes-Etapa01-Slim-FTP.md
+│   │        │
+│   │        └── Etapa01_Slim-Despliegue-FTP.md (sustituido, trazabilidad)
+│   │
+│   ├── wa-server-info-2026-04-28-101933.json
+│   └── wp-Información de salud del sitio.txt
+│
 ├── codespace/                                      │
 │   └── guia-inicio-rapido-opencode.md ◄────────────│── pendiente
 │                                                   │
@@ -106,26 +148,34 @@ pre-proyecto/
 
                                         ---
 
-                                        ## 📋 Orden Recomendado de Lectura
+## 📋 Orden Recomendado de Lectura
 
-                                        | Prioridad | Ruta | Motivo |
-                                        |-----------|------|--------|
-                                        | 1 | `pre-proyecto/02-Boceto_B09.md` | Entendimiento completo y actualizado del proyecto (v0.9) |
-                                        | 2 | `pre-proyecto/PyR/01-R01.md` | Primer análisis crítico y preguntas de aclaración |
-                                        | 3 | `pre-proyecto/PyR/02-R01_r.md` | Respuestas oficiales que definen decisiones clave |
-                                        | 4 | `pre-proyecto/PyR/03-R02.md` | Propuesta metodológica doc-first para el desarrollo |
-                                        | 5 | `pre-proyecto/PyR/04-R03.md` | Evaluación y refinamiento de la propuesta documental |
-                                        | 6 | `pre-proyecto/03-Boceto_B09-ACLARATIVO.md` | Documento síntesis que consolida todos los pendientes |
-                                        | 7 | `pre-proyecto/Estudios/01-PHP-React-Framework-Analisis.md` | Decisión tecnológica: análisis del framework candidato inicial |
-                                        | 8 | `pre-proyecto/Estudios/02-Comparativa-Frameworks-PHP.md` | **Decisión tecnológica: comparativa de frameworks** (recomendación: Slim PHP) |
-                                        | 9 | `pre-proyecto/Estudios/03-Workflow-Comparativa.md` | Decisión tecnológica: motor de workflow (recomendación: Pipeflow PHP) |
-                                        | 10 | `pre-proyecto/Estudios/04-Autenticacion-WordPress-Investigacion.md` | Investigación previa: autenticación con WordPress |
-                                        | 11 | `pre-proyecto/Estudios/05-Implementacion-Autenticacion-WordPress.md` | Implementación: flujo de autenticación WA ↔ WordPress |
-                                        | 12 | `pre-proyecto/Estudios/06-Log-Errores-Investigacion.md` | Investigación previa: librerías de logging y errores |
+| Prioridad | Ruta | Motivo |
+|-----------|------|--------|
+| 1 | `pre-proyecto/02-Boceto_B09.md` | Entendimiento completo y actualizado del proyecto (v0.9) |
+| 2 | `pre-proyecto/PyR/01-R01.md` | Primer análisis crítico y preguntas de aclaración |
+| 3 | `pre-proyecto/PyR/02-R01_r.md` | Respuestas oficiales que definen decisiones clave |
+| 4 | `pre-proyecto/PyR/03-R02.md` | Propuesta metodológica doc-first para el desarrollo |
+| 5 | `pre-proyecto/PyR/04-R03.md` | Evaluación y refinamiento de la propuesta documental |
+| 6 | `pre-proyecto/03-Boceto_B09-ACLARATIVO.md` | Documento síntesis que consolida todos los pendientes |
+| 7 | `pre-proyecto/Estudios/01-PHP-React-Framework-Analisis.md` | Decisión tecnológica: análisis del framework candidato inicial |
+| 8 | `pre-proyecto/Estudios/02-Comparativa-Frameworks-PHP.md` | **Decisión tecnológica: comparativa de frameworks** (recomendación: Slim PHP) |
+| 9 | `pre-proyecto/Estudios/03-Workflow-Comparativa.md` | Decisión tecnológica: motor de workflow (recomendación: Pipeflow PHP) |
+| 10 | `pre-proyecto/Estudios/04-Autenticacion-WordPress-Investigacion.md` | Investigación previa: autenticación con WordPress |
+| 11 | `pre-proyecto/Estudios/05-Implementacion-Autenticacion-WordPress.md` | Implementación: flujo de autenticación WA ↔ WordPress |
+| 12 | `pre-proyecto/Estudios/06-Log-Errores-Investigacion.md` | Investigación previa: librerías de logging y errores |
 | 13 | `pre-proyecto/Estudios/07-Implementacion-Logging-Trazabilidad.md` | Implementación: sistema de logging, trazabilidad y errores |
 | 14 | `pre-proyecto/Estudios/08-Analisis-Tecnico-Decisiones-Framework.md` | **Análisis complementario**: resolución de 5 cuestiones técnicas sobre la decisión de framework |
-| 15 | `pre-proyecto/codespace/guia-inicio-rapido-opencode.md` | **Nuevo desarrollador**: guía de OpenCode para el entorno de desarrollo |
-                                        | — | `pre-proyecto/legado-obsoleto/01-Boceto_B08.md` | **Referencia histórica**: entendimiento inicial (v0.8), obsoleto |
+| 15 | `pre-proyecto/implantacion/00-decisiones-generales-implantacion.md` | **Implantación**: decisiones técnicas confirmadas (FTP, Composer, Codespace, directorios) |
+| 16 | `pre-proyecto/implantacion/00-INDICE-Implantacion.md` | **Implantación**: índice de documentación de implantación |
+| 17 | `pre-proyecto/implantacion/10-Decisiones-Etapa01-Slim-FTP.md` | **Implantación**: decisiones específicas de Etapa 1 (Slim en raíz, sin wa-slim/) |
+| 18 | `pre-proyecto/implantacion/20-Alcance-Etapa01-Slim-FTP.md` | **Implantación**: alcance incluido/excluido de Etapa 1 |
+| 19 | `pre-proyecto/implantacion/30-Plan-Etapa01-Slim-FTP.md` | **Implantación**: plan detallado de Etapa 1 |
+| 20 | `pre-proyecto/implantacion/40-Despliegue-Etapa01-Slim-FTP.md` | **Implantación**: procedimiento de despliegue FTP |
+| 21 | `pre-proyecto/implantacion/50-Verificacion-Etapa01-Slim-FTP.md` | **Implantación**: procedimiento de verificación |
+| 22 | `pre-proyecto/implantacion/60-Pendientes-Etapa01-Slim-FTP.md` | **Implantación**: seguimiento de pendientes |
+| 23 | `pre-proyecto/codespace/guia-inicio-rapido-opencode.md` | **Nuevo desarrollador**: guía de OpenCode para el entorno de desarrollo |
+| — | `pre-proyecto/legado-obsoleto/01-Boceto_B08.md` | **Referencia histórica**: entendimiento inicial (v0.8), obsoleto |
 
                                         ---
 
@@ -144,5 +194,6 @@ pre-proyecto/
 
                                         ---
 
-                                        *Última actualización: 28 de abril de 2026*
+                                        *Última actualización: 28 de abril de 2026*  
+*Sección de implantación: 00-decisiones-generales-implantacion.md, 00-INDICE-Implantacion.md, 10-Decisiones-Etapa01-Slim-FTP.md, 20-Alcance-Etapa01-Slim-FTP.md, 30-Plan-Etapa01-Slim-FTP.md, 40-Despliegue-Etapa01-Slim-FTP.md, 50-Verificacion-Etapa01-Slim-FTP.md, 60-Pendientes-Etapa01-Slim-FTP.md*
                                         

@@ -1,0 +1,168 @@
+﻿`
+### wp-core ###
+
+version: 6.9.4
+site_language: es_ES
+user_language: es_ES
+timezone: Europe/Madrid
+permalink: /%postname%/
+https_status: true
+multisite: false
+user_registration: 0
+blog_public: 0
+default_comment_status: undefined
+environment_type: production
+user_count: 1
+dotorg_communication: true
+
+### wp-paths-sizes ###
+
+wordpress_path: /home/beevivac/levantecofem_es
+wordpress_size: 189,19 MB (198382875 bytes)
+uploads_path: /home/beevivac/levantecofem_es/wp-content/uploads
+uploads_size: 44,15 MB (46291996 bytes)
+themes_path: /home/beevivac/levantecofem_es/wp-content/themes
+themes_size: 9,89 MB (10373580 bytes)
+plugins_path: /home/beevivac/levantecofem_es/wp-content/plugins
+plugins_size: 256,41 MB (268867053 bytes)
+fonts_path: /home/beevivac/levantecofem_es/wp-content/uploads/fonts
+fonts_size: 2,28 MB (2386544 bytes)
+database_size: 44,50 MB (46661632 bytes)
+total_size: 546,42 MB (572963680 bytes)
+
+### wp-dropins (1) ###
+
+maintenance.php: true
+
+### wp-active-theme ###
+
+name: Blocksy Child (blocksy-child)
+version: undefined
+author: Creative Themes
+author_website: (undefined)
+parent_theme: Blocksy (blocksy)
+theme_features: core-block-patterns, widgets-block-editor, post-thumbnails, automatic-feed-links, responsive-embeds, html5, title-tag, custom-logo, lifterlms-sidebars, boostify-header-footer, rank-math-breadcrumbs, fl-theme-builder-headers, fl-theme-builder-footers, fl-theme-builder-parts, editor-styles, editor-style, editor-color-palette, editor-gradient-presets, menus, align-wide, customize-selective-refresh-widgets, header-footer-elementor, woocommerce, wc-product-gallery-zoom, widgets
+theme_path: /home/beevivac/levantecofem_es/wp-content/themes/blocksy-child
+auto_update: Desactivado
+
+### wp-parent-theme ###
+
+name: Blocksy (blocksy)
+version: 2.1.27 (latest version: 2.1.38)
+author: CreativeThemes
+author_website: https://creativethemes.com
+theme_path: /home/beevivac/levantecofem_es/wp-content/themes/blocksy
+auto_update: Desactivado
+
+### wp-plugins-active (25) ###
+
+Adapta RGPD: version: 1.3.9, author: Superadmin, Actualizaciones automáticas desactivadas
+Blocksy Companion: version: 2.1.27, author: CreativeThemes (latest version: 2.1.38), Actualizaciones automáticas desactivadas
+Cloudflare: version: 4.14.2, author: Cloudflare, Inc., Actualizaciones automáticas desactivadas
+Duplicate Menu: version: 0.2.3, author: Jon Christopher, Actualizaciones automáticas desactivadas
+Duplicate Page: version: 4.5.6, author: mndpsingh287 (latest version: 4.5.8), Actualizaciones automáticas desactivadas
+Elementor: version: 3.35.2, author: Elementor.com (latest version: 4.0.3), Actualizaciones automáticas desactivadas
+GoSMTP: version: 1.1.8, author: Softaculous Team, Actualizaciones automáticas desactivadas
+GoSMTP Pro: version: 1.1.8, author: Softaculous Team (latest version: 1.2.0), Actualizaciones automáticas desactivadas
+JetBlocks For Elementor: version: 1.3.23, author: Crocoblock, Actualizaciones automáticas desactivadas
+JetElements For Elementor: version: 2.8.0.2, author: Crocoblock, Actualizaciones automáticas desactivadas
+JetEngine: version: 3.8.3, author: Crocoblock, Actualizaciones automáticas desactivadas
+JetFormBuilder: version: 3.5.6.1, author: Crocoblock (latest version: 3.6.0.1), Actualizaciones automáticas desactivadas
+JetFormBuilder Drag and Drop File Upload: version: 1.0.4, author: Crocoblock (latest version: 1.0.4.1), Actualizaciones automáticas desactivadas
+JetFormBuilder PDF Attachment: version: 1.0.3, author: Crocoblock, Actualizaciones automáticas desactivadas
+JetFormBuilder User Login Action: version: 2.0.7, author: Crocoblock, Actualizaciones automáticas desactivadas
+JetMenu: version: 2.4.18, author: Crocoblock, Actualizaciones automáticas desactivadas
+JetProductGallery: version: 2.2.5, author: Crocoblock, Actualizaciones automáticas desactivadas
+JetSearch: version: 3.5.16.1, author: Crocoblock, Actualizaciones automáticas desactivadas
+JetSmartFilters: version: 3.7.3, author: Crocoblock, Actualizaciones automáticas desactivadas
+JetThemeCore: version: 2.3.1.1, author: Crocoblock, Actualizaciones automáticas desactivadas
+JetWooBuilder For Elementor: version: 2.2.3, author: Crocoblock, Actualizaciones automáticas desactivadas
+Media Sweep: version: 1.0.4, author: WPCreatix, Actualizaciones automáticas desactivadas
+SEOPress: version: 9.5, author: The SEO Guys at SEOPress (latest version: 9.7.4), Actualizaciones automáticas desactivadas
+WooCommerce: version: 10.4.4, author: Automattic (latest version: 10.7.0), Actualizaciones automáticas desactivadas
+WP-Sweep: version: 1.1.8, author: Lester 'GaMerZ' Chan, Actualizaciones automáticas desactivadas
+
+### wp-plugins-inactive (3) ###
+
+Crocoblock Wizard: version: 1.2.12, author: Crocoblock, Actualizaciones automáticas desactivadas
+Database Manager - WP Adminer: version: 4.3.2, author: Pexle Chris (latest version: 4.3.4.1), Actualizaciones automáticas desactivadas
+LiteSpeed Cache: version: 7.7, author: LiteSpeed Technologies (latest version: 7.8.1), Actualizaciones automáticas desactivadas
+
+### wp-media ###
+
+image_editor: WP_Image_Editor_GD
+imagick_module_version: No disponible
+imagemagick_version: No disponible
+imagick_version: No disponible
+file_uploads: 1
+post_max_size: 128M
+upload_max_filesize: 32M
+max_effective_size: 32 MB
+max_file_uploads: 20
+image_format_transforms: image/heic → image/jpeg, image/heif → image/jpeg, image/heic-sequence → image/jpeg, image/heif-sequence → image/jpeg
+gd_version: 2.3.3
+gd_formats: GIF, JPEG, PNG, WebP, BMP, AVIF, XPM
+ghostscript_version: 9.54.0
+
+### wp-server ###
+
+server_architecture: Linux 5.14.0-611.45.1.el9_7.x86_64 x86_64
+httpd_software: LiteSpeed
+php_version: 8.3.30 64bit
+php_sapi: litespeed
+max_input_variables: 1000
+time_limit: 30
+memory_limit: 256M
+max_input_time: 60
+upload_max_filesize: 32M
+php_post_max_size: 128M
+curl_version: 8.19.0 OpenSSL/3.5.1
+suhosin: false
+imagick_availability: false
+pretty_permalinks: true
+htaccess_extra_rules: false
+static_robotstxt_file: false
+current: 2026-04-28T10:28:23+00:00
+utc-time: Tuesday, 28-Apr-26 10:28:23 UTC
+server-time: 2026-04-28T12:28:22+02:00
+
+### wp-database ###
+
+extension: mysqli
+server_version: 11.4.10-MariaDB-cll-lve
+client_version: mysqlnd 8.3.30
+max_allowed_packet: 268435456
+max_connections: 300
+
+### wp-constants ###
+
+WP_HOME: undefined
+WP_SITEURL: undefined
+WP_CONTENT_DIR: /home/beevivac/levantecofem_es/wp-content
+WP_PLUGIN_DIR: /home/beevivac/levantecofem_es/wp-content/plugins
+WP_MEMORY_LIMIT: 40M
+WP_MAX_MEMORY_LIMIT: 256M
+WP_DEBUG: false
+WP_DEBUG_DISPLAY: true
+WP_DEBUG_LOG: false
+SCRIPT_DEBUG: false
+WP_CACHE: false
+CONCATENATE_SCRIPTS: undefined
+COMPRESS_SCRIPTS: undefined
+COMPRESS_CSS: undefined
+WP_ENVIRONMENT_TYPE: undefined
+WP_DEVELOPMENT_MODE: undefined
+DB_CHARSET: utf8mb4
+DB_COLLATE: undefined
+
+### wp-filesystem ###
+
+wordpress: writable
+wp-content: writable
+uploads: writable
+plugins: writable
+themes: writable
+fonts: writable
+mu-plugins: writable
+
+`
