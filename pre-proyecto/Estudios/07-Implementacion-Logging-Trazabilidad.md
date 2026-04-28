@@ -160,7 +160,7 @@ Evento/Error → Captura → Enriquecimiento → Formateo → Enrutamiento → A
 
 **Implementación recomendada:** Monolog (`monolog/monolog`)
 
-**Justificación según `log-errores-traking.md`:**
+**Justificación según `06-Log-Errores-Investigacion.md`:**
 - ID 1: "Implementa PSR-3, usa niveles PSR-3, soporta canales, stacks de handlers, procesadores, contexto y múltiples salidas"
 - "Puede aportar logging estructurable por `pipeline_id`, etapa, job, intento y resultado usando contexto, procesadores y formatters"
 
@@ -207,7 +207,7 @@ $logger->pushProcessor(new IntrospectionProcessor());
 
 **Implementación recomendada:** Sistema personalizado inspirado en Symfony Workflow
 
-**Justificación según `log-errores-traking.md`:**
+**Justificación según `06-Log-Errores-Investigacion.md`:**
 - ID 8 (Symfony Workflow): "Proporciona workflow y finite state machine; define procesos con lugares y transiciones"
 - "Puede modelar estados del pipeline como lugares/transiciones: `pending`, `running`, `completed`, `failed`, `skipped`, `cancelled`"
 
@@ -247,7 +247,7 @@ CREATE TABLE pipeline_execution_tracking (
 
 **Implementación recomendada:** Wikimedia NormalizedException + Symfony ErrorHandler
 
-**Justificación según `log-errores-traking.md`:**
+**Justificación según `06-Log-Errores-Investigacion.md`:**
 - ID 2 (NormalizedException): "Define una interfaz y trait para excepciones PSR-3-friendly, con mensaje normalizado y contexto separado para logging"
 - ID 3 (Symfony ErrorHandler): "Proporciona herramientas para gestionar errores y debugging; permite registrar ErrorHandler y envolver llamadas"
 
@@ -735,7 +735,7 @@ Esta referencia permite al admin buscar directamente el log en base de datos o a
 
 ## 11. Herramientas y Librerías Recomendadas
 
-Basado en `pre-proyecto/log-errores-traking.md`:
+Basado en `pre-proyecto/Estudios/06-Log-Errores-Investigacion.md`:
 
 ### 11.1 Logging (Principal Recomendación)
 
@@ -743,7 +743,7 @@ Basado en `pre-proyecto/log-errores-traking.md`:
 | ----------- | -------- | -------- | ------- |
 | **Monolog** | `monolog/monolog` | MIT | Implementa PSR-3, múltiples handlers, contexto, formatters |
 
-**Justificación:** ID 1 en `log-errores-traking.md`: "Puede aportar logging estructurable por `pipeline_id`, etapa, job, intento y resultado usando contexto, procesadores y formatters"
+**Justificación:** ID 1 en `06-Log-Errores-Investigacion.md`: "Puede aportar logging estructurable por `pipeline_id`, etapa, job, intento y resultado usando contexto, procesadores y formatters"
 
 ### 11.2 Manejo de Errores
 
@@ -1086,4 +1086,4 @@ Según Boceto_B09.md, estas decisiones quedan para el desarrollador:
 
 *Fuentes:*
 - *`pre-proyecto/Boceto_B09.md` (secciones 29, 31, 32, 34.5)*
-- *`pre-proyecto/log-errores-traking.md` (hallazgos de herramientas)*
+- *`pre-proyecto/Estudios/06-Log-Errores-Investigacion.md` (hallazgos de herramientas)*

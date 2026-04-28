@@ -1245,6 +1245,6 @@ export async function logoutWordPress(): Promise<void> {
 
 *Fuentes:*
 - *`pre-proyecto/Boceto_B09.md`*
-- *`pre-proyecto/Login-externo-WordPress.md`*
+- *`pre-proyecto/Estudios/04-Autenticacion-WordPress-Investigacion.md`*
 - *WordPress Developer Resources: `is_user_logged_in()`, REST API Authentication*
 - *MDN Web Docs: `credentials`, SameSite cookies, CORS*
